@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class peminjaman extends Model
 {
+    use HasFactory;
+    
     public function user(){
-        return $this-> belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function book(){
-        return $this-> belongsTo(Buku::class);
+        return $this->belongsTo(Book::class);
     }
-    use HasFactory;
+    
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use Illuminate\Http\Request;
-use App\Models\Buku;
 use App\Models\Peminjaman;
 use Carbon\Carbon;
 
@@ -14,7 +14,9 @@ class PeminjamanController extends Controller
      */
     public function pinjam(Request $request)
     {
-        $buku = Buku::findOrFail($request->id_buku);
+        // validasi
+
+        $buku = Book::findOrFail($request->id_buku);
 
         if ($buku->stok < 1) {
             return back()->with('error', 'Stok habis');

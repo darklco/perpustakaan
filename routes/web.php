@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BukuController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PeminjamanController;
 
 /*
@@ -20,9 +21,12 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard-user', [BukuController::class, 'index']);
-    Route::post('/buku', [BukuController::class, 'store']);
+    Route::get('/dashboard-user', [BookController::class, 'index']);
+    Route::post('/buku', [BookController::class, 'store']);
     
     Route::post('/pinjam', [PeminjamanController::class, 'pinjam']);
     Route::post('/kembalikan', [PeminjamanController::class, 'kembalikan']);
+
+    Route::resource('kategori', CategoryController::class);
+
 });
