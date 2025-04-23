@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('penerbit');
             $table->year('tahun_terbit');
             $table->integer('stok');
+            $table->string('foto')->nullable(); // tambahkan ini
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bukus');
+        Schema::dropIfExists('books'); 
     }
 };
