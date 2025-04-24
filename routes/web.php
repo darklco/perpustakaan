@@ -21,11 +21,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login/user', [UserController::class, 'showLoginForm'])->name('login_user');
-Route::post('/login/user', [UserController::class, 'loginUser'])->name('login_user.submit');
-
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::post('/register', [AuthController::class, 'registerSubmit'])->name('register.submit');
 
 
 Route::middleware(['auth'])->group(function () {
