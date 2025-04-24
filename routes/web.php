@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\AdminDashboardController;
-
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,11 +17,18 @@ use App\Http\Controllers\AdminDashboardController;
 |
 */
 
+// Route::get('/', function () {
+    // return view('welcome');
+// });
+
+//views
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('auth.register');
+})->name('register');
 
-
+Route::get('/login', function () {
+    return view('auth.login_user');
+})->name('login_user');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard-user', [BookController::class, 'index']);
@@ -33,7 +40,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('kategori', CategoryController::class);
 
     // Tambahkan blok middleware admin DI DALAM middleware auth
-    Route::middleware(['admin'])->group(function () {
-        Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-    });
+    // Route::middleware(['admin'])->group(function () {
+        // Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    // });
 });

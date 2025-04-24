@@ -2,7 +2,7 @@
 
 @section('content')
 <link rel="stylesheet" href="{{ asset('css1/login_user.css') }}">
-
+<!-- login -->
 <div class="login-container">
     <h2>Login User</h2>
     <form action="{{ route('login_user.submit') }}" method="POST">
