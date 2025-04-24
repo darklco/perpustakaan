@@ -22,11 +22,11 @@ use App\Http\Controllers\AuthController;
 // });
 
 //views
-Route::get('/', function () {
+Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
 
-Route::get('/login', function () {
+Route::get('/', function () {
     return view('auth.login_user');
 })->name('login_user');
 

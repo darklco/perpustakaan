@@ -1,0 +1,68 @@
+$choco-light: #fffaf5;
+$choco-medium: #a97458;
+$choco-dark: #5a3e36;
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: $choco-light;
+}
+
+.form-container {
+  width: 350px;
+  margin: 80px auto;
+  background-color: white;
+  padding: 30px;
+  border: 2px solid $choco-medium;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  h2 {
+    margin-bottom: 20px;
+    color: $choco-dark;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    input {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    button {
+      padding: 10px;
+      background-color: $choco-medium;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        background-color: darken($choco-medium, 10%);
+      }
+    }
+
+    p {
+      margin-top: 15px;
+      font-size: 14px;
+
+      a {
+        color: $choco-dark;
+        text-decoration: underline;
+
+        &:hover {
+          color: darken($choco-dark, 10%);
+        }
+      }
+    }
+  }
+}
