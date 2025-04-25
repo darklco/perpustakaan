@@ -79,21 +79,68 @@ nav {
   }
 }
 .home {
-  background-image: url("/images/bg.jpg");
-  background-size: cover;
-  background-position: center;
-  height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 80vh;
   color: white;
-  text-align: center;
 }
-.home h1 {
+
+.home .image {
+  background-image: url("/img/bg3.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 50%;
+  height: 100%;
+}
+
+.home .content {
+  background-color: rgba(111, 78, 47, 0.7);
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  padding: 2rem;
+  color: white;
+  border-radius: 10px;
+}
+
+.home .content h1 {
   font-size: 3rem;
+  font-weight: bold;
+  font-style: italic;
+  color: transparent;
+  background: linear-gradient(45deg, #6e4c2e, #3e2723);
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  letter-spacing: 2px;
 }
-.home p {
+
+.home .content p {
   font-size: 1.5rem;
+  line-height: 1.6;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+  letter-spacing: 1px;
+  max-width: 90%;
+  margin-top: 20px;
+  font-style: italic;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.home .content h1, .home .content p {
+  animation: fadeInUp 1s ease-out;
 }
 
 .tentang {
@@ -174,6 +221,71 @@ nav {
   background-color: #8c5d42;
 }
 
+.best-seller {
+  background-color: var(--choco-light);
+  padding: 2rem;
+  text-align: center;
+}
+.best-seller h2 {
+  font-size: 2rem;
+  color: var(--choco-dark);
+  margin-bottom: 1rem;
+}
+.best-seller .carousel-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+}
+.best-seller .carousel-track {
+  display: flex;
+  transition: transform 0.3s ease;
+  gap: 1rem;
+}
+.best-seller .card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 160px;
+  flex: 0 0 auto;
+  padding: 1rem;
+  text-align: center;
+}
+.best-seller .card img {
+  width: 100%;
+  height: 200px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 6px;
+}
+.best-seller .card p {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: var(--choco-dark);
+}
+.best-seller .carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--choco-medium);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  z-index: 1;
+}
+.best-seller .carousel-btn.left {
+  left: 0;
+}
+.best-seller .carousel-btn.right {
+  right: 0;
+}
+.best-seller .carousel-btn:hover {
+  background-color: #8c5d42;
+}
+
 footer.footer {
   background-color: var(--choco-dark);
   color: white;
@@ -220,4 +332,70 @@ footer.footer .footer-content .footer-icons i {
 
 .nav-links li button:hover {
   color: #dcbda4;
+}
+
+.carousel-section {
+  padding: 2rem;
+  background-color: var(--choco-light);
+  color: var(--choco-dark);
+  text-align: center;
+}
+
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 1rem;
+}
+
+.carousel-card {
+  min-width: 150px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  padding: 0.5rem;
+  flex-shrink: 0;
+  text-align: center;
+}
+.carousel-card img {
+  width: 100%;
+  border-radius: 6px;
+  height: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.carousel-card p {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: var(--choco-dark);
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--choco-medium);
+  border: none;
+  color: white;
+  font-size: 24px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  z-index: 2;
+  border-radius: 4px;
+}
+.carousel-btn.left {
+  left: 0;
+}
+.carousel-btn.right {
+  right: 0;
+}
+.carousel-btn:hover {
+  background-color: #8c5d42;
 }/*# sourceMappingURL=index.css.map */
