@@ -9,6 +9,11 @@ class Book extends Model
 {
     use HasFactory;
     
+
+    protected $fillable = [
+        'judul', 'penulis', 'penerbit', 'tahun_terbit', 'stok', 'foto'
+    ];
+
     public function admin(){
         return $this->belongsTo(Admin::class);
     }

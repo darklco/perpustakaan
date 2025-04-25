@@ -10,6 +10,7 @@ class AdminDashboardController extends Controller
 {
     public function index()
     {
+        
         $totalBooks = Book::count();
         $totalUsers = User::count();
         $totalLoans = Loan::count();
