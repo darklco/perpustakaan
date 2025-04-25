@@ -56,13 +56,13 @@
             <div class="carousel-container">
               <button class="carousel-btn left">&#10094;</button>
                 <div class="carousel-track">
-                  <div class="card"><img src="/img/cov1.jpg" alt="Buku 1"><p>Cursed By The Black Heart</p></div>
-                      <div class="card"><img src="/img/cov2.jpg" alt="Buku 2"><p>Cursed By Gold</p></div>
-                      <div class="card"><img src="/img/cov3.jpg" alt="Buku 3"><p>Cursed By Fate</p></div>
-                      <div class="card"><img src="/img/cov4.jpg" alt="Buku 4"><p>The Phantom Prince</p></div>
-                      <div class="card"><img src="/img/cov5.jpg" alt="Buku 5"><p>Cursed By Sirens Kiss</p></div>
-                      <div class="card"><img src="/img/cov6.jpg" alt="Buku 6"><p>Cursed By Malignant Magic</p></div>
-                      <div class="card"><img src="/img/cov7.jpg" alt="Buku 7"><p>Cursed By Darkness</p></div>
+                  <div class="card"><img src="/images/cov1.jpg" alt="Buku 1"><p>Cursed By The Black Heart</p></div>
+                      <div class="card"><img src="/images/cov2.jpg" alt="Buku 2"><p>Cursed By Gold</p></div>
+                      <div class="card"><img src="/images/cov3.jpg" alt="Buku 3"><p>Cursed By Fate</p></div>
+                      <div class="card"><img src="/images/cov4.jpg" alt="Buku 4"><p>The Phantom Prince</p></div>
+                      <div class="card"><img src="/images/cov5.jpg" alt="Buku 5"><p>Cursed By Sirens Kiss</p></div>
+                      <div class="card"><img src="/images/cov6.jpg" alt="Buku 6"><p>Cursed By Malignant Magic</p></div>
+                      <div class="card"><img src="/images/cov7.jpg" alt="Buku 7"><p>Cursed By Darkness</p></div>
                   </div>
               <button class="carousel-btn right">&#10095;</button>
             </div>

@@ -11,7 +11,7 @@
         <div class="container">
           <!-- Sidebarnya -->
           <div class="sidebar">
-            <img src="img/bk.jpg" alt="Admin Profile" class="profile-img">
+            <img src="images/bk.jpg" alt="Admin Profile" class="profile-img">
               <h2>Admin</h2>
                   <ul>
                    <li><a href="#" onclick="showContent('admin')"><i class="fas fa-home"></i> Admin</a></li>
