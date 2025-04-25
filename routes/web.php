@@ -8,26 +8,25 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 
-// Hapus route closure pertama yang duplikat
-Route::get('/', function () {
-    return view('auth.login');
-})->name('login_user');
-
 // Auth routes
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [AuthController::class, 'register'])->name('register.submit'); // Ubah nama route
+Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.submit'); // Konsisten dengan penamaan
-
+Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard-user', [BookController::class, 'index']);
-    Route::post('/buku', [BookController::class, 'store']);
+// Route index setelah login
+Route::get('/index', [AuthController::class, 'index'])->name('index')->middleware('auth');
 
-    Route::post('/pinjam', [PeminjamanController::class, 'pinjam']);
-    Route::post('/kembalikan', [PeminjamanController::class, 'kembalikan']);
+// Routes untuk user yang sudah login
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard-user', [AuthController::class, 'index'])->name('dashboard.user');
+
+    Route::post('/buku', [BookController::class, 'store'])->name('buku.store');
+
+    Route::post('/pinjam', [PeminjamanController::class, 'pinjam'])->name('pinjam.store');
+    Route::post('/kembalikan', [PeminjamanController::class, 'kembalikan'])->name('pinjam.kembalikan');
 
     Route::resource('kategori', CategoryController::class);
 });
