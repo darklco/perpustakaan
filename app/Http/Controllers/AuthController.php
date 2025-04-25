@@ -16,19 +16,13 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
-            'username' => 'required|unique:users',
-            'email'    => 'required|email|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
-
-        user::create([
-            'username' => $request->username,
-            'email'    => $request->email,
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
-        return redirect()->route('login')->with('success', 'Registrasi berhasil!');
+    
+        return redirect()->route('login')->with('success', 'Register berhasil.');
     }
 
     public function showLoginForm()
@@ -38,20 +32,27 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
         if (Auth::attempt($credentials)) {
-            return redirect()->route('dashboard');
+            $request->session()->regenerate();
+            return redirect()->intended('dashboard');
         }
 
-        return back()->withErrors(['email' => 'Email atau password salah.']);
+        return back()->withErrors([
+            'email' => 'Email atau password salah.',
+        ])->onlyInput('email');
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
         return redirect()->route('login');
     }
 }
-
-
