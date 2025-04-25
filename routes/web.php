@@ -6,29 +6,21 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AuthController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\Auth\RegisterController;
 
-// Route::get('/', function () {
-    // return view('welcome');
-// });
-
-//views
-Route::get('/register', function () {
-    return view('auth.register');
-})->name('register');
-
+// Hapus route closure pertama yang duplikat
 Route::get('/', function () {
-    return view('auth.login_user');
+    return view('auth.login');
 })->name('login_user');
+
+// Auth routes
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register.submit'); // Ubah nama route
+
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.submit'); // Konsisten dengan penamaan
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard-user', [BookController::class, 'index']);
@@ -38,9 +30,4 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/kembalikan', [PeminjamanController::class, 'kembalikan']);
 
     Route::resource('kategori', CategoryController::class);
-
-    // Tambahkan blok middleware admin DI DALAM middleware auth
-    // Route::middleware(['admin'])->group(function () {
-        // Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-    // });
 });
