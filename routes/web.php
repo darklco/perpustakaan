@@ -16,8 +16,11 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Public route
+// Public routes
 Route::get('/buku', [BookController::class, 'index'])->name('buku');
+
+// Jika ingin ada POST ke /buku, misal untuk menambah buku atau pencarian
+Route::post('/buku', [BookController::class, 'store'])->name('buku.store');
 
 // Routes untuk user dan admin setelah login
 Route::middleware(['auth'])->group(function () {
@@ -38,7 +41,13 @@ Route::middleware(['auth'])->group(function () {
     // CRUD Kategori
     Route::resource('kategori', CategoryController::class);
 
-    // Peminjaman
+    // Route untuk tampilkan form peminjaman
+    Route::get('/peminjaman', [PeminjamanController::class, 'peminjaman'])->name('peminjaman');
+    
+    // Route untuk proses pinjam (sudah ada)
     Route::post('/pinjam', [PeminjamanController::class, 'pinjam'])->name('pinjam.store');
-    Route::post('/kembalikan', [PeminjamanController::class, 'kembalikan'])->name('pinjam.kembalikan');
+
+    // Public route untuk melihat detail buku
+    Route::get('/buku/{id}', [BookController::class, 'show'])->name('showbuku');
+
 });

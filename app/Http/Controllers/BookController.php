@@ -96,4 +96,26 @@ class BookController extends Controller
         $book->delete();
         return redirect()->route('books.index')->with('success', 'Buku berhasil dihapus.');
     }
+
+    public function formPinjam($id)
+    {
+        // Get the book by ID
+        $book = Book::findOrFail($id);
+        
+        // Return the view with the book data
+        return view('peminjaman.form', compact('book'));
+    }
+
+    public function pinjam(Request $request)
+    {
+        // Logic to process the book loan
+        // ...
+        
+        return redirect()->route('dashboard.user')->with('success', 'Buku berhasil dipinjam');
+    }
+
+    public function show ($id){
+        $book = Book::findOrFail($id);
+        return view('showbuku', compact('book'));
+    }
 }

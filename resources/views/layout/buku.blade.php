@@ -12,7 +12,6 @@
 <!-- Navbar di Atas -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-       
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
             aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -35,7 +34,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Biografi</a>
                 </li>
-        
             </ul>
         </div>
     </div>
@@ -43,7 +41,14 @@
 
 <!-- Konten -->
 <div class="container mt-4">
+    
+    <!-- Tombol Kembali -->
+    <div class="mb-3">
+        <a href="javascript:history.back()" class="btn btn-secondary">&larr; Kembali</a>
+    </div>
+
     @yield('content')
+
 </div>
 
 <!-- Scripts -->

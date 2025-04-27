@@ -24,12 +24,14 @@
                         <p class="card-text"><small class="badge bg-secondary">{{ $book->kategori }}</small></p>
 
                         <div class="mt-auto">
-                            <a href="{{ route('buku', $book->id) }}" class="btn btn-info btn-sm w-100 mb-2">Lihat</a>
+                            <a href="{{ route('showbuku', $book->id) }}" class="btn btn-info btn-sm w-100 mb-2">Lihat</a>
 
-                            <form action="#" method="POST">
+                            <form action="{{ route('pinjam.store') }}" method="POST">
                                 @csrf
+                                <input type="hidden" name="book_id" value="{{ $book->id }}">
                                 <button type="submit" class="btn btn-success btn-sm w-100">Pinjam Buku</button>
                             </form>
+                            
                         </div>
                     </div>
                 </div>
