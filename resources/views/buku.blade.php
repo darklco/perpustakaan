@@ -1,54 +1,46 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galeri Buku</title>
-        <link href="{{ asset('css/bukuu.css') }}" rel="stylesheet">
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    </head>
-<body>
+@extends('layout.buku')
 
-            <div class="burger" id="burger">
-            <span></span>
-            <span></span>
-            <span></span>
+@section('content')
+<div class="container py-5">
+    <h1 class="mb-4 text-center">Daftar Buku</h1>
+
+    @if (session('success'))
+        <div class="alert alert-success text-center">{{ session('success') }}</div>
+    @endif
+
+    <div class="row">
+        @forelse ($books as $book)
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+                    @if ($book->foto)
+                        <img src="{{ asset('storage/' . $book->foto) }}" class="card-img-top" alt="{{ $book->judul }}" style="height: 250px; object-fit: cover;">
+                    @else
+                        <img src="{{ asset('images/default-book.png') }}" class="card-img-top" alt="Default Buku" style="height: 250px; object-fit: cover;">
+                    @endif
+                    
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ $book->judul }}</h5>
+                        <p class="card-text text-muted mb-1">{{ $book->penulis }}</p>
+                        <p class="card-text"><small class="badge bg-secondary">{{ $book->kategori }}</small></p>
+
+                        <div class="mt-auto">
+                            <a href="{{ route('buku', $book->id) }}" class="btn btn-info btn-sm w-100 mb-2">Lihat</a>
+
+                            <form action="#" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-success btn-sm w-100">Pinjam Buku</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="container-fluid">
-            <div class="d-flex flex-column flex-md-row min-vh-100">
-        
-        <!-- Sidebarnya -->
-        <div class="sidebar p-3">
-            <h4 class="libro-title">Libro</h4>
-            <h5>Kategori Buku</h5>
-            <ul id="kategoriList" class="list-unstyled">
-                <li><a href="#" data-kategori="Semua">Semua</a></li>
-                <li><a href="#" data-kategori="Novel">Novel</a></li>
-                <li><a href="#" data-kategori="Ilmiah">Ilmiah</a></li>
-                <li><a href="#" data-kategori="Komik">Komik</a></li>
-                <li><a href="#" data-kategori="Biografi">Biografi</a></li>
-                <li><a href="#" data-kategori="Fiksi">Fiksi</a></li>
-            </ul>
-        </div>
-
-                <div class="content flex-fill p-3">
-             @yield('content')
+        @empty
+            <div class="col-12">
+                <div class="alert alert-warning text-center">
+                    Tidak ada buku yang tersedia saat ini.
+                </div>
             </div>
-        </div>
+        @endforelse
     </div>
-
-        <!-- Scriptnya -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-        <script>
-        const burger = document.getElementById('burger');
-        const sidebar = document.querySelector('.sidebar');
-
-        burger.addEventListener('click', () => {
-        sidebar.classList.toggle('active');
-        });
-        </script>
-
-     </body>
-</html>
+</div>
+@endsection

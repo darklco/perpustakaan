@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\Category; // Tambahkan import model Category
 
 class BookController extends Controller
 {
@@ -11,15 +12,23 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::all();
-        return view('books.index', compact('books'));
+        return view('buku', compact('books'));
     }
-
+    
+    // Menampilkan halaman dashboard admin
+    public function dashboard()
+    {
+        $books = Book::all();
+        return view('DashboardAdmin', compact('books'));
+    }
+    
     // Menampilkan form tambah buku
     public function create()
     {
-        return view('books.create');
+        $categories = Category::all(); // Tambahkan data kategori
+        return view('books.create', compact('categories')); // Kirim data kategori ke view
     }
-
+    
     // Menyimpan buku baru
     public function store(Request $request)
     {
@@ -29,24 +38,26 @@ class BookController extends Controller
             'penerbit' => 'required|string|max:255',
             'tahun_terbit' => 'required|digits:4|integer',
             'stok' => 'required|integer|min:0',
+            'category_id' => 'required', // konsisten pakai category_id
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
-
+        
         if ($request->hasFile('foto')) {
             $validated['foto'] = $request->file('foto')->store('books', 'public');
         }
-
+        
         Book::create($validated);
-
+        
         return redirect()->route('books.index')->with('success', 'Buku berhasil ditambahkan.');
     }
-
-    // Menampilkan form edit
+    
+    // Menampilkan form edit buku
     public function edit(Book $book)
     {
-        return view('books.edit', compact('book'));
+        $categories = Category::all(); // Tambahkan data kategori
+        return view('editbuku', compact('book', 'categories')); // Kirim data kategori ke view
     }
-
+    
     // Update data buku
     public function update(Request $request, Book $book)
     {
@@ -56,21 +67,32 @@ class BookController extends Controller
             'penerbit' => 'required|string|max:255',
             'tahun_terbit' => 'required|digits:4|integer',
             'stok' => 'required|integer|min:0',
+            'category_id' => 'required', // konsisten
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
-
+        
         if ($request->hasFile('foto')) {
+            // Hapus foto lama jika ada
+            if ($book->foto) {
+                \Illuminate\Support\Facades\Storage::delete('public/' . $book->foto);
+            }
+            
             $validated['foto'] = $request->file('foto')->store('books', 'public');
         }
-
+        
         $book->update($validated);
-
+        
         return redirect()->route('books.index')->with('success', 'Buku berhasil diperbarui.');
     }
-
-    // Hapus buku
+    
+    // Menghapus buku
     public function destroy(Book $book)
     {
+        // Hapus file foto jika ada
+        if ($book->foto) {
+            \Illuminate\Support\Facades\Storage::delete('public/' . $book->foto);
+        }
+        
         $book->delete();
         return redirect()->route('books.index')->with('success', 'Buku berhasil dihapus.');
     }

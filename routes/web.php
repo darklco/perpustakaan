@@ -16,10 +16,8 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Public route (bisa diakses tanpa login)
-Route::get('/buku', function () {
-    return view('buku'); // Pastikan view buku.blade.php ada
-})->name('buku');
+// Public route
+Route::get('/buku', [BookController::class, 'index'])->name('buku');
 
 // Routes untuk user dan admin setelah login
 Route::middleware(['auth'])->group(function () {
@@ -30,15 +28,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard-user', [AuthController::class, 'index'])->name('dashboard.user');
 
     // Dashboard admin
-    Route::get('/dashboardadmin', [AdminDashboardController::class, 'index'])->name('AdminDashboard');
+    Route::middleware('admin')->group(function () {
+        Route::get('/admin', [AuthController::class, 'dashboard'])->name('DashboardAdmin');
+    });
 
-    // CRUD Buku (CRUD lengkap pakai resource)
+    // CRUD Buku
     Route::resource('books', BookController::class);
+
+    // CRUD Kategori
+    Route::resource('kategori', CategoryController::class);
 
     // Peminjaman
     Route::post('/pinjam', [PeminjamanController::class, 'pinjam'])->name('pinjam.store');
     Route::post('/kembalikan', [PeminjamanController::class, 'kembalikan'])->name('pinjam.kembalikan');
-
-    // CRUD Kategori
-    Route::resource('kategori', CategoryController::class);
 });

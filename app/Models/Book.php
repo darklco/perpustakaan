@@ -11,7 +11,7 @@ class Book extends Model
     
 
     protected $fillable = [
-        'judul', 'penulis', 'penerbit', 'tahun_terbit', 'stok', 'foto'
+        'judul', 'penulis', 'penerbit', 'tahun_terbit', 'stok', 'foto', 'category_id'
     ];
 
     public function admin(){
