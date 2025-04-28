@@ -1,97 +1,108 @@
+/* Reset */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* Body */
 body {
   font-family: "Segoe UI", sans-serif;
   background-color: #f8f6f4;
   color: #333;
 }
 
-.sidebar {
+/* Navbar */
+.navbar {
   background-color: #6e4b3a;
-  color: #fff;
-  width: 250px;
-  min-height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  transition: all 0.3s ease;
-}
-.sidebar h4, .sidebar h5 {
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-.sidebar .libro-title {
-  font-size: 1.5rem;
-  text-align: center;
-  margin-bottom: 1rem;
-  color: #fff;
-}
-.sidebar ul {
-  padding-left: 0;
-}
-.sidebar ul li {
-  margin-bottom: 0.5rem;
-}
-.sidebar ul li a {
-  color: #fff;
-  text-decoration: none;
-  padding: 8px 12px;
-  display: block;
-  border-radius: 5px;
-}
-.sidebar ul li a:hover {
-  background-color: #4d3428;
-}
-.sidebar ul hr {
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  margin: 1rem 0;
 }
 
+.navbar .navbar-brand {
+  font-weight: bold;
+  color: #fff;
+}
+
+.navbar .navbar-brand:hover {
+  color: #ddd;
+}
+
+.navbar-nav .nav-link {
+  color: #fff;
+  margin-right: 1rem;
+  transition: color 0.3s;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #d5bda1;
+}
+
+/* Content Container */
+.container {
+  margin-top: 2rem;
+}
+
+/* Content Card Area */
 .content {
   background-color: #e9dbd0;
-  min-height: 100vh;
   padding: 2rem;
-  transition: margin-left 0.3s ease;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.burger {
-  display: none;
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 1001;
-  cursor: pointer;
-}
-.burger span {
-  display: block;
-  width: 30px;
-  height: 4px;
-  margin: 5px;
-  background-color: #6e4b3a;
-  border-radius: 2px;
-  transition: all 0.3s ease;
+/* Card Book */
+.card {
+  background-color: #fff;
+  border: none;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+  height: 250px;
+  object-fit: cover;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Buttons */
+.btn-info {
+  background-color: #17c0eb;
+  border: none;
+}
+
+.btn-info:hover {
+  background-color: #0abde3;
+}
+
+.btn-success {
+  background-color: #2ecc71;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #27ae60;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-  .sidebar {
-    left: -250px;
+  .navbar-nav {
+    text-align: center;
   }
-  .sidebar.active {
-    left: 0;
+  
+  .navbar-nav .nav-link {
+    margin: 0.5rem 0;
   }
-  .burger {
-    display: block;
-  }
+  
   .content {
-    margin-left: 0;
-    padding-top: 4rem;
+    padding: 1rem;
   }
-  .content.sidebar-active {
-    margin-left: 250px;
-  }
-}/*# sourceMappingURL=bukuu.css.map */
+}

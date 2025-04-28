@@ -15,7 +15,7 @@
       <input type="email" name="email" placeholder="Email" required>
       <input type="password" name="password" placeholder="Password" required>
       <button type="submit">Register</button>
-      <p>Sudah punya akun? <a href="{{ route('login_user') }}">Login di sini</a></p>
+      <p>Sudah punya akun? <a href="{{ route('login') }}">Login di sini</a></p>
     </form>
   </div>
 </body>
