@@ -1,115 +1,97 @@
-$warna-coklat: #6e4b3a;
-$warna-coklat-muda: #e9dbd0;
-$warna-putih: #fff;
-$warna-abu: #f8f6f4;
-$font-utama: 'Segoe UI', sans-serif;
+$primary-color: #6b4c3b;
+$secondary-color: #a1866f;
+$background-color: #f5f0eb; 
+$text-color: #3e2c23; 
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+// Navbar
+.navbar {
+  background-color: lighten($primary-color, 20%) !important;
 
-body {
-  font-family: $font-utama;
-  background-color: $warna-abu;
-  color: #333;
-}
-
-.sidebar {
-  background-color: $warna-coklat;
-  color: $warna-putih;
-  width: 250px;
-  min-height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  transition: all 0.3s ease;
-
-  h4, h5 {
+  .navbar-brand,
+  .nav-link {
+    color: $text-color !important; 
     font-weight: bold;
-    margin-bottom: 1rem;
-  }
 
-  .libro-title {
-    font-size: 1.5rem;
-    text-align: center;
-    margin-bottom: 1rem;
-    color: $warna-putih;
-  }
-
-  ul {
-    padding-left: 0;
-
-    li {
-      margin-bottom: 0.5rem;
-
-      a {
-        color: $warna-putih;
-        text-decoration: none;
-        padding: 8px 12px;
-        display: block;
-        border-radius: 5px;
-
-        &:hover {
-          background-color: darken($warna-coklat, 10%);
-        }
-      }
-    }
-
-    hr {
-      border-top: 1px solid rgba(255,255,255,0.2);
-      margin: 1rem 0;
+    &:hover {
+      color: darken($text-color, 10%) !important; 
     }
   }
 }
 
-.content {
-  background-color: $warna-coklat-muda;
-  min-height: 100vh;
-  padding: 2rem;
-  transition: margin-left 0.3s ease;
-}
+// Sidebar kategori
+.sidebar {
+  background-color: $background-color;
+  
+  .nav-link {
+    color: $text-color !important;
+    font-weight: bold;
 
-.burger {
-  display: none;
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 1001;
-  cursor: pointer;
-
-  span {
-    display: block;
-    width: 30px;
-    height: 4px;
-    margin: 5px;
-    background-color: $warna-coklat;
-    border-radius: 2px;
-    transition: all 0.3s ease;
+    &:hover {
+      color: darken($text-color, 10%) !important;
+    }
   }
 }
 
-@media (max-width: 768px) {
-  .sidebar {
-    left: -250px;
+// Tombol Umum
+.btn,
+.btn-primary,
+.btn-success,
+.btn-info,
+.btn-warning,
+.btn-danger {
+  background-color: $primary-color !important;
+  border-color: $primary-color !important;
+  color: $background-color !important; 
+
+  &:hover {
+    background-color: darken($primary-color, 10%) !important;
+    border-color: darken($primary-color, 10%) !important;
+    color: $background-color !important;
+  }
+}
+
+// Tombol secondary
+.btn-secondary {
+  background-color: $secondary-color !important;
+  border-color: $secondary-color !important;
+  color: $background-color !important;
+
+  &:hover {
+    background-color: darken($secondary-color, 10%) !important;
+    border-color: darken($secondary-color, 10%) !important;
+    color: $background-color !important;
+  }
+}
+
+// Card
+.card {
+  border: none;
+  background-color: lighten($primary-color, 35%);
+  color: $text-color;
+  
+  .card-header {
+    background-color: $primary-color;
+    color: $background-color;
+    font-weight: bold;
   }
 
-  .sidebar.active {
-    left: 0;
+  .card-body {
+    background-color: lighten($primary-color, 40%);
   }
+}
 
-  .burger {
-    display: block;
+// Badge kategori
+.badge {
+  background-color: $primary-color;
+  color: $background-color;
+}
+
+// Table di halaman show
+.table {
+  th {
+    color: $primary-color;
   }
-
-  .content {
-    margin-left: 0;
-    padding-top: 4rem;
-  }
-
-  .content.sidebar-active {
-    margin-left: 250px;
+  td {
+    color: $text-color;
   }
 }

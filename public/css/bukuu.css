@@ -1,108 +1,81 @@
-/* Reset */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* Body */
-body {
-  font-family: "Segoe UI", sans-serif;
-  background-color: #f8f6f4;
-  color: #333;
-}
-
-/* Navbar */
 .navbar {
-  background-color: #6e4b3a;
+  background-color: #a97c63 !important;
 }
-
-.navbar .navbar-brand {
+.navbar .navbar-brand,
+.navbar .nav-link {
+  color: #3e2c23 !important;
   font-weight: bold;
-  color: #fff;
+}
+.navbar .navbar-brand:hover,
+.navbar .nav-link:hover {
+  color: #1d1511 !important;
 }
 
-.navbar .navbar-brand:hover {
-  color: #ddd;
+.sidebar {
+  background-color: #f5f0eb;
+}
+.sidebar .nav-link {
+  color: #3e2c23 !important;
+  font-weight: bold;
+}
+.sidebar .nav-link:hover {
+  color: #1d1511 !important;
 }
 
-.navbar-nav .nav-link {
-  color: #fff;
-  margin-right: 1rem;
-  transition: color 0.3s;
+.btn,
+.btn-primary,
+.btn-success,
+.btn-info,
+.btn-warning,
+.btn-danger {
+  background-color: #6b4c3b !important;
+  border-color: #6b4c3b !important;
+  color: #f5f0eb !important;
+}
+.btn:hover,
+.btn-primary:hover,
+.btn-success:hover,
+.btn-info:hover,
+.btn-warning:hover,
+.btn-danger:hover {
+  background-color: #4a3529 !important;
+  border-color: #4a3529 !important;
+  color: #f5f0eb !important;
 }
 
-.navbar-nav .nav-link:hover {
-  color: #d5bda1;
+.btn-secondary {
+  background-color: #a1866f !important;
+  border-color: #a1866f !important;
+  color: #f5f0eb !important;
+}
+.btn-secondary:hover {
+  background-color: #866d57 !important;
+  border-color: #866d57 !important;
+  color: #f5f0eb !important;
 }
 
-/* Content Container */
-.container {
-  margin-top: 2rem;
-}
-
-/* Content Card Area */
-.content {
-  background-color: #e9dbd0;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Card Book */
 .card {
-  background-color: #fff;
   border: none;
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
+  background-color: #c4a594;
+  color: #3e2c23;
+}
+.card .card-header {
+  background-color: #6b4c3b;
+  color: #f5f0eb;
+  font-weight: bold;
+}
+.card .card-body {
+  background-color: #cdb3a5;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+.badge {
+  background-color: #6b4c3b;
+  color: #f5f0eb;
 }
 
-.card-img-top {
-  height: 250px;
-  object-fit: cover;
+.table th {
+  color: #6b4c3b;
 }
-
-.card-body {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Buttons */
-.btn-info {
-  background-color: #17c0eb;
-  border: none;
-}
-
-.btn-info:hover {
-  background-color: #0abde3;
-}
-
-.btn-success {
-  background-color: #2ecc71;
-  border: none;
-}
-
-.btn-success:hover {
-  background-color: #27ae60;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .navbar-nav {
-    text-align: center;
-  }
-  
-  .navbar-nav .nav-link {
-    margin: 0.5rem 0;
-  }
-  
-  .content {
-    padding: 1rem;
-  }
-}
+.table td {
+  color: #3e2c23;
+}/*# sourceMappingURL=bukuu.css.map */
