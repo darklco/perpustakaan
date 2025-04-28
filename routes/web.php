@@ -41,13 +41,16 @@ Route::middleware(['auth'])->group(function () {
     // CRUD Kategori
     Route::resource('kategori', CategoryController::class);
 
-    // Route untuk tampilkan form peminjaman
-    Route::get('/peminjaman', [PeminjamanController::class, 'peminjaman'])->name('peminjaman');
-    
-    // Route untuk proses pinjam (sudah ada)
-    Route::post('/pinjam', [PeminjamanController::class, 'pinjam'])->name('pinjam.store');
 
+    Route::post('/peminjaman/pinjam', [PeminjamanController::class, 'pinjam'])->name('peminjaman.pinjam');
+    Route::get('/peminjaman/form/{id}', [PeminjamanController::class, 'formPinjam'])->name('peminjaman.form');
+    
     // Public route untuk melihat detail buku
     Route::get('/buku/{id}', [BookController::class, 'show'])->name('showbuku');
+
+    // kategori
+    Route::get('/buku/kategori/{kategori}', [BookController::class, 'filterKategori'])->name('buku.kategori');
+    
+
 
 });

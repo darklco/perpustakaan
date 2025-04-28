@@ -25,11 +25,12 @@
 
                         <div class="mt-auto">
                             <a href="{{ route('showbuku', $book->id) }}" class="btn btn-info btn-sm w-100 mb-2">Lihat</a>
-
-                            <form action="{{ route('pinjam.store') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="book_id" value="{{ $book->id }}">
-                                <button type="submit" class="btn btn-success btn-sm w-100">Pinjam Buku</button>
+                            
+                            @csrf
+                            <a href="{{ route('peminjaman.form', $book->id) }}" class="btn btn-success">
+                                Pinjam Buku Ini
+                            </a>
+                                
                             </form>
                             
                         </div>

@@ -22,4 +22,8 @@ class Book extends Model
         return $this->hasmany(peminjaman::class);
     }
     
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

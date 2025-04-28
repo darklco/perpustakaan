@@ -87,7 +87,7 @@ nav {
 }
 
 .home .image {
-  background-image: url("/img/bg3.jpg");
+  background-image: url("public/images/bg3.jpg");
   background-size: cover;
   background-position: center;
   width: 50%;

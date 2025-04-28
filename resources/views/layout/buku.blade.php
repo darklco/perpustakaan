@@ -23,18 +23,19 @@
                     <a class="nav-link" href="{{ route('buku') }}">Semua</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Novel</a>
+                    <a class="nav-link" href="{{ route('buku.kategori', ['kategori' => 'Novel']) }}">Novel</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Ilmiah</a>
+                    <a class="nav-link" href="{{ route('buku.kategori', ['kategori' => 'Ilmiah']) }}">Ilmiah</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Komik</a>
+                    <a class="nav-link" href="{{ route('buku.kategori', ['kategori' => 'Komik']) }}">Komik</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Biografi</a>
+                    <a class="nav-link" href="{{ route('buku.kategori', ['kategori' => 'Biografi']) }}">Biografi</a>
                 </li>
             </ul>
+            
         </div>
     </div>
 </nav>
