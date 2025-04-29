@@ -2,11 +2,17 @@
 
 @section('content')
 <div class="container py-5">
-    <h1 class="mb-4 text-center">Daftar Buku</h1>
 
+    {{-- Alert --}}
     @if (session('success'))
         <div class="alert alert-success text-center">{{ session('success') }}</div>
     @endif
+    @if (session('error'))
+        <div class="alert alert-danger text-center">{{ session('error') }}</div>
+    @endif
+
+    {{-- Daftar Buku --}}
+    <h1 class="mb-4 text-center">Daftar Buku</h1>
 
     <div class="row">
         @forelse ($books as $book)
@@ -24,15 +30,8 @@
                         <p class="card-text"><small class="badge bg-secondary">{{ $book->kategori }}</small></p>
 
                         <div class="mt-auto">
-                            <a href="{{ route('showbuku', $book->id) }}" class="btn btn-info btn-sm w-100 mb-2">Lihat</a>
-                            
-                            @csrf
-                            <a href="{{ route('peminjaman.form', $book->id) }}" class="btn btn-success">
-                                Pinjam Buku Ini
-                            </a>
-                                
-                            </form>
-                            
+                            <a href="{{ route('showbuku', $book->id) }}" class="btn btn-info btn-sm w-100 mb-2">Lihat Detail</a>
+                            <a href="{{ route('peminjaman.form', $book->id) }}" class="btn btn-success btn-sm w-100">Pinjam Buku Ini</a>
                         </div>
                     </div>
                 </div>
@@ -45,5 +44,45 @@
             </div>
         @endforelse
     </div>
+
+    {{-- Daftar Peminjaman --}}
+    <hr class="my-5">
+    <h2 class="mb-4 text-center">Daftar Buku yang Dipinjam</h2>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr class="text-center">
+                    <th>No</th>
+                    <th>Judul Buku</th>
+                    <th>Tanggal Pinjam</th>
+                    <th>Jatuh Tempo</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($peminjamans as $peminjaman)
+                    <tr class="text-center">
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $peminjaman->book->judul }}</td>
+                        <td>{{ \Carbon\Carbon::parse($peminjaman->tanggal_pinjam)->format('d M Y') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($peminjaman->jatuh_tempo)->format('d M Y') }}</td>
+                        <td>
+                            <form action="{{ route('peminjaman.kembalikan') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $peminjaman->id }}">
+                                <button type="submit" class="btn btn-warning btn-sm">Kembalikan</button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="text-center">Belum ada buku yang dipinjam.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+
 </div>
 @endsection

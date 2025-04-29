@@ -10,14 +10,14 @@ class peminjaman extends Model
     use HasFactory;
     
     protected $fillable = [
+        'user_id',
+        'book_id',
         'judul',
-        'penulis',
-        'penerbit',
-        'tahun_terbit',
-        'stok',
-        'foto',
-        'category_id'
+        'tanggal_pinjam',
+        'tanggal_kembali',
     ];
+
+    protected $table = 'peminjamen';
 
     public function user(){
         return $this->belongsTo(User::class);

@@ -14,19 +14,35 @@ class BookController extends Controller
         return view('buku', compact('books'));
     }
     
-    public function filterKategori($kategori)
+    public function filterKategoriuser($kategori)
     {
         // Cari buku berdasarkan nama kategori
 
-        $books = Book::all(); 
         $categories = Category::all();
-        $bukus = Book::whereHas('category', function($query) use ($kategori) {
+        $books = Book::whereHas('category', function($query) use ($kategori) {
             $query->where('name', $kategori);
         })->get();
-
+    
         return view('buku', compact('books', 'categories'));
     }
 
+    public function filterKategori(Request $request)
+    {
+        $kategoriId = $request->kategori;
+        $categories = Category::all(); // untuk select dropdown
+        $books = Book::where('category_id', $kategoriId)->get();
+    
+        return view('DashboardAdmin', compact('books', 'categories'));
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->keyword;
+        $categories = Category::all(); // untuk select dropdown
+        $books = Book::where('judul', 'like', "%$keyword%")->get();
+    
+        return view('nama_view_admin', compact('books', 'categories'));
+    }
 
     // Menampilkan halaman dashboard admin
     public function dashboard()
