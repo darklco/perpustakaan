@@ -70,10 +70,37 @@
         </div>
 
         <!-- Halaman Riwayat Peminjaman -->
-        <div id="riwayat" class="content-section" style="display: none;">
-            <h2>Riwayat Peminjaman</h2>
-            <p>Belum ada data peminjaman.</p>
-        </div>
+<div id="riwayat" class="content-section" style="display: none;">
+    <h2>Riwayat Peminjaman</h2>
+
+    @if($peminjamans->isEmpty())
+        <p>Tidak ada data peminjaman.</p>
+    @else
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Judul Buku</th>
+                <th>Nama Peminjam</th>
+                <th>Tanggal Pinjam</th>
+                <th>Tanggal Kembali</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($peminjamans as $peminjaman)
+                <tr>
+                    <td>{{ $peminjaman->book->judul ?? 'Buku tidak ditemukan' }}</td>
+                    <td>{{ $peminjaman->nama_peminjam ?? '-' }}</td>
+                    <td>{{ $peminjaman->tanggal_pinjam ?? '-' }}</td>
+                    <td>{{ $peminjaman->tanggal_kembali ?? '-' }}</td>
+                    <td>{{ $peminjaman->status ?? '-' }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+    @endif
+</div>
+
 
         <!-- Halaman Kelola Buku -->
 

@@ -57,6 +57,9 @@ namespace App\Http\Controllers;
         public function dashboard()
         {
             $books = Book::all();
+            $categories = Category::all();
+            $peminjamans = Peminjaman::with('book')->get(); // relasi ke buku (jika ada)
+            
             return view('DashboardAdmin', compact('books'));
         }
         
