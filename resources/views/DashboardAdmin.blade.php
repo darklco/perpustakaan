@@ -76,6 +76,26 @@
         </div>
 
         <!-- Halaman Kelola Buku -->
+
+       <!-- Navbar Kategori dan Search -->
+        <div class="d-flex justify-content-between mb-3">
+            <!-- Dropdown Kategori -->
+            <form action="{{ route('filterKategori') }}" method="GET">
+                <select name="kategori">
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+                <button type="submit">Filter</button>
+            </form>
+
+            <!-- Form Search -->
+            <form action="{{ route('buku.search') }}" method="GET" class="d-flex">
+                <input type="text" name="keyword" class="form-control me-2" placeholder="Cari buku..." value="{{ request('keyword') }}">
+                <button class="btn btn-primary" type="submit">Cari</button>
+            </form>
+        </div>
+        
         <div id="hapus" class="content-section" style="display: none;">
             <h2>Kelola Buku</h2>
             <table class="table table-striped table-bordered">

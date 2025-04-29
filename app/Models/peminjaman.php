@@ -9,6 +9,16 @@ class peminjaman extends Model
 {
     use HasFactory;
     
+    protected $fillable = [
+        'user_id',
+        'book_id',
+        'judul',
+        'tanggal_pinjam',
+        'tanggal_kembali',
+    ];
+
+    protected $table = 'peminjamen';
+
     public function user(){
         return $this->belongsTo(User::class);
     }

@@ -8,7 +8,7 @@
 <body class="register-page">
   <div class="form-container">
     <h2>Register</h2>
-    <form method="POST" action="{{ route('register.submit') }}">
+    <form method="POST" action="{{ route('register') }}">
 
       @csrf
       <input type="text" name="name" placeholder="Username" required>

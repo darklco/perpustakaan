@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
-use App\Models\Category; // Tambahkan import model Category
-
+use App\Models\Category; 
 class BookController extends Controller
 {
     // Menampilkan semua buku
@@ -15,6 +14,36 @@ class BookController extends Controller
         return view('buku', compact('books'));
     }
     
+    public function filterKategoriuser($kategori)
+    {
+        // Cari buku berdasarkan nama kategori
+
+        $categories = Category::all();
+        $books = Book::whereHas('category', function($query) use ($kategori) {
+            $query->where('name', $kategori);
+        })->get();
+    
+        return view('buku', compact('books', 'categories'));
+    }
+
+    public function filterKategori(Request $request)
+    {
+        $kategoriId = $request->kategori;
+        $categories = Category::all(); // untuk select dropdown
+        $books = Book::where('category_id', $kategoriId)->get();
+    
+        return view('DashboardAdmin', compact('books', 'categories'));
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->keyword;
+        $categories = Category::all(); // untuk select dropdown
+        $books = Book::where('judul', 'like', "%$keyword%")->get();
+    
+        return view('nama_view_admin', compact('books', 'categories'));
+    }
+
     // Menampilkan halaman dashboard admin
     public function dashboard()
     {

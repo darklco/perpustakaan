@@ -12,6 +12,22 @@ class PeminjamanController extends Controller
     /**
      * Fungsi untuk meminjam buku
      */
+
+     public function index()
+    {
+    $books = Book::all();
+    $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
+
+    return view('buku', compact('books', 'peminjamans'));
+
+
+    }
+
+     public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function pinjam(Request $request)
     {
         // validasi 

@@ -8,10 +8,7 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-    ];
-
+   
     public function buku()
     {
         return $this->hasMany(Book::class);
