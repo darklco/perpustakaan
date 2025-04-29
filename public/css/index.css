@@ -21,7 +21,11 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
 }
 
 .logo {
@@ -79,36 +83,35 @@ nav {
   }
 }
 .home {
+  padding-top: 80px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  height: 80vh;
+  align-items: stretch;
+  min-height: auto;
   color: white;
 }
-
 .home .image {
   background-image: url("/images/bg3.jpg");
   background-size: cover;
   background-position: center;
   width: 50%;
-  height: 100%;
+  height: 400px;
 }
-
 .home .content {
   background-color: rgba(111, 78, 47, 0.7);
   width: 50%;
-  height: 100%;
+  height: 400px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: left;
+  align-items: flex-start;
   padding: 2rem;
-  color: white;
+  text-align: left;
   border-radius: 10px;
 }
-
 .home .content h1 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: bold;
   font-style: italic;
   color: transparent;
@@ -117,32 +120,67 @@ nav {
   -webkit-background-clip: text;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
   letter-spacing: 2px;
+  animation: fadeInUp 1s ease-out;
 }
-
 .home .content p {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   line-height: 1.6;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
   letter-spacing: 1px;
   max-width: 90%;
   margin-top: 20px;
   font-style: italic;
+  animation: fadeInUp 1s ease-out;
+}
+@media (max-width: 768px) {
+  .home {
+    flex-direction: column;
+    padding-top: 80px;
+  }
+  .home .image {
+    width: 100%;
+    height: 250px;
+  }
+  .home .content {
+    width: 100%;
+    height: auto;
+    padding: 1.5rem;
+    border-radius: 0;
+    align-items: center;
+    text-align: center;
+  }
+  .home .content h1 {
+    font-size: 2rem;
+  }
+  .home .content p {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 480px) {
+  .home .image {
+    height: 200px;
+  }
+  .home .content {
+    padding: 1rem;
+  }
+  .home .content h1 {
+    font-size: 1.8rem;
+  }
+  .home .content p {
+    font-size: 0.9rem;
+  }
 }
 
 @keyframes fadeInUp {
-  from {
+  0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateY(0);
   }
 }
-.home .content h1, .home .content p {
-  animation: fadeInUp 1s ease-out;
-}
-
 .tentang {
   height: auto;
   background-color: var(--choco-light);
