@@ -14,11 +14,11 @@
     {{-- Filter Kategori dan Pencarian --}}
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
         <div class="kategori-sidebar d-flex flex-wrap gap-2">
-            <a href="#" class="btn btn-outline-secondary btn-sm active">Semua</a>
-            <a href="#" class="btn btn-outline-secondary btn-sm">Novel</a>
-            <a href="#" class="btn btn-outline-secondary btn-sm">Ilmiah</a>
-            <a href="#" class="btn btn-outline-secondary btn-sm">Komik</a>
-            <a href="#" class="btn btn-outline-secondary btn-sm">Biografi</a>
+            <a href="{{ route('buku') }}" class="btn btn-outline-secondary btn-sm {{ request()->routeIs('buku.index') ? 'active' : '' }}">Semua</a>
+            <a href="{{ route('buku.kategori', ['kategori' => 'Novel']) }}" class="btn btn-outline-secondary btn-sm {{ request()->routeIs('buku.kategori') && request()->kategori == 'Novel' ? 'active' : '' }}">Novel</a>
+            <a href="{{ route('buku.kategori', ['kategori' => 'Ilmiah']) }}" class="btn btn-outline-secondary btn-sm {{ request()->kategori == 'Ilmiah' ? 'active' : '' }}">Ilmiah</a>
+            <a href="{{ route('buku.kategori', ['kategori' => 'Komik']) }}" class="btn btn-outline-secondary btn-sm {{ request()->kategori == 'Komik' ? 'active' : '' }}">Komik</a>
+            <a href="{{ route('buku.kategori', ['kategori' => 'Biografi']) }}" class="btn btn-outline-secondary btn-sm {{ request()->kategori == 'Biografi' ? 'active' : '' }}">Biografi</a>
         </div>
         <form action="#" method="GET" class="d-flex mt-2 mt-md-0">
             <input type="text" name="query" class="form-control me-2" placeholder="Cari judul buku..." />
@@ -85,7 +85,26 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $peminjaman->book->judul }}</td>
                         <td>{{ \Carbon\Carbon::parse($peminjaman->tanggal_pinjam)->format('d M Y') }}</td>
-                        <td>{{ \Carbon\Carbon::parse($peminjaman->jatuh_tempo)->format('d M Y') }}</td>
+                        @php
+                    $jatuhTempo = \Carbon\Carbon::parse($peminjaman->jatuh_tempo);
+                    $now = \Carbon\Carbon::now();
+                    $selisihHari = $now->diffInDays($jatuhTempo, false); // false agar dapat negatif jika telat
+                @endphp
+
+                <td class="{{ $selisihHari < 0 ? 'bg-danger text-white' : '' }}">
+                    {{ $jatuhTempo->format('d M Y') }}
+                    <br>
+                    <small>
+                        @if ($selisihHari > 0)
+                            {{ $selisihHari }} hari tersisa
+                        @elseif ($selisihHari === 0)
+                            <span class="text-warning">Hari ini batas akhir</span>
+                        @else
+                            <span class="text-warning">{{ abs($selisihHari) }} hari terlambat</span>
+                        @endif
+                    </small>
+                </td>
+
                         <td>
                             <form action="{{ route('peminjaman.kembalikan') }}" method="POST">
                                 @csrf

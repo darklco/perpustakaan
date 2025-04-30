@@ -15,9 +15,17 @@ namespace App\Http\Controllers;
             $categories = Category::all(); // TAMBAHAN: untuk konsistensi
             $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
 
-            return view('buku', compact('books', 'categories', 'peminjamans'));
+            $bestSellers = Book::with('category')->take(7)->get();
+
+            return view('buku', compact('books', 'categories', 'peminjamans', 'bestSellers'));
         }
         
+        public function homepage()
+        {
+            $bestSellers = Book::with('category')->take(7)->get(); 
+            return view('index', compact('bestSellers'));
+        }
+
         public function filterKategoriuser($kategori)
         {
             $categories = Category::all();
@@ -26,8 +34,9 @@ namespace App\Http\Controllers;
             })->get();
 
             $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
+            $bestSellers = Book::with('category')->take(7)->get();
             
-            return view('buku', compact('books', 'categories', 'peminjamans'));
+            return view('buku', compact('books', 'categories', 'peminjamans', 'bestSellers'));
         }
 
         public function filterKategori(Request $request)
@@ -50,11 +59,13 @@ namespace App\Http\Controllers;
         
             $categories = Category::all();
             $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
+            $bestSellers = Book::with('category')->take(7)->get();
         
             return view('dashboardadmin', [
                 'books' => $books,
                 'categories' => $categories,
                 'peminjamans' => $peminjamans,
+                'bestSellers' => $bestSellers,
                 'section' => 'hapus'
             ]);
         }
@@ -76,11 +87,13 @@ namespace App\Http\Controllers;
         
             $categories = Category::all();
             $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
+            $bestSellers = Book::with('category')->take(7)->get();
         
             return view('dashboardadmin', [
                 'books' => $books,
                 'categories' => $categories,
                 'peminjamans' => $peminjamans,
+                'bestSellers' => $bestSellers,
                 'section' => 'hapus'
             ]);
         }
@@ -95,19 +108,23 @@ namespace App\Http\Controllers;
                         ->orWhere('penerbit', 'like', "%$keyword%")
                         ->orWhere('tahun_terbit', 'like', "%$keyword%")
                         ->get();
+
+                        $bestSellers = Book::take(7)->get();
         
             if ($request->ajax()) {
                 return view('partials.table-buku', compact('books'));
             }
+            
         
             $categories = Category::all();
             $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
+            $bestSellers = Book::with('category')->take(7)->get();
         
-            return view('dashboardadmin', [
+            return view('buku', [
                 'books' => $books,
                 'categories' => $categories,
                 'peminjamans' => $peminjamans,
-                'section' => 'hapus'
+                'bestSellers' => $bestSellers
             ]);
         }
         
@@ -118,8 +135,9 @@ namespace App\Http\Controllers;
             $books = Book::all();
             $categories = Category::all();
             $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
+            $bestSellers = Book::with('category')->take(7)->get();
             
-            return view('DashboardAdmin', compact('books', 'categories', 'peminjamans'));
+            return view('DashboardAdmin', compact('books', 'categories', 'peminjamans', 'bestSellers'));
         }
         
         // Menampilkan form tambah buku
@@ -152,7 +170,7 @@ namespace App\Http\Controllers;
             Book::create($validated);
             
             // Mengubah redirect ke dashboard admin
-            return redirect()->route('dashboard.admin')->with('success', 'Buku berhasil ditambahkan.');
+            return redirect()->route('DashboardAdmin')->with('success', 'Buku berhasil ditambahkan.');
         }
         
         // Menampilkan form edit buku
@@ -189,7 +207,7 @@ namespace App\Http\Controllers;
             $book->update($validated);
             
             // Mengubah redirect ke dashboard admin
-            return redirect()->route('dashboarddmin')->with('success', 'Buku berhasil diperbarui.');
+            return redirect()->route('DashboardAdmin')->with('success', 'Buku berhasil diperbarui.');
         }
         
         // Menghapus buku
@@ -227,7 +245,8 @@ namespace App\Http\Controllers;
             $book = Book::findOrFail($id);
             // TAMBAHAN: Jika view showbuku membutuhkan $peminjamans
             $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
+            $bestSellers = Book::with('category')->take(7)->get();
             
-            return view('showbuku', compact('book', 'peminjamans'));
+            return view('showbuku', compact('book', 'peminjamans', 'bestSellers'));
         }
     }

@@ -54,19 +54,19 @@
 
     <section class="best-seller">
       <h2>Buku Best Seller</h2>
-      <div class="carousel-container">
-        <button class="carousel-btn left">&#10094;</button>
-        <div class="carousel-track">
-          <div class="card"><img src="{{ asset('images/cov1.jpg') }}" alt="Buku 1"><p>Cursed By The Black Heart</p></div>
-          <div class="card"><img src="{{ asset('images/cov2.jpg') }}" alt="Buku 2"><p>Cursed By Gold</p></div>
-          <div class="card"><img src="{{ asset('images/cov3.jpg') }}" alt="Buku 3"><p>Cursed By Fate</p></div>
-          <div class="card"><img src="{{ asset('images/cov4.jpg') }}" alt="Buku 4"><p>The Phantom Prince</p></div>
-          <div class="card"><img src="{{ asset('images/cov5.jpg') }}" alt="Buku 5"><p>Cursed By Sirens Kiss</p></div>
-          <div class="card"><img src="{{ asset('images/cov6.jpg') }}" alt="Buku 6"><p>Cursed By Malignant Magic</p></div>
-          <div class="card"><img src="{{ asset('images/cov7.jpg') }}" alt="Buku 7"><p>Cursed By Darkness</p></div>
-        </div>
-        <button class="carousel-btn right">&#10095;</button>
+      <div class="carousel-track">
+        @foreach($bestSellers as $book)
+          <div class="card">
+            <img src="{{ asset('storage/' . $book->foto) }}" alt="{{ $book->judul }}">
+            <p>{{ $book->judul }}</p>
+            <div class="card-buttons">
+              <a href="{{ route('books.show', $book->id) }}" class="btn-info">Info</a>
+              <a href="{{ route('peminjaman.form', $book->id) }}" class="btn-pinjam">Pinjam</a>
+            </div>
+          </div>
+        @endforeach
       </div>
+      
     </section>
 
     <footer id="footer" class="footer">
