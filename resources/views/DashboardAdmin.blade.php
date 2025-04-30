@@ -11,120 +11,38 @@
 
 <div class="container-fluid">
     <div class="sidebar">
-        <img src="{{ asset('img/bk.jpg') }}" alt="Admin Profile" class="profile-img">
+        <img src="{{ asset('images/bk.jpg') }}" alt="Admin Profile" class="profile-img">
         <h2>Admin</h2>
         <ul>
-            <li><a href="#" onclick="showContent('admin')"><i class="fas fa-home"></i> Admin</a></li>
+            <li><a href="#" onclick="showContent('hapus')"><i class="fas fa-book"></i> Kelola Buku</a></li>
             <li><a href="#" onclick="showContent('tambah')"><i class="fas fa-plus-circle"></i> Tambah Buku</a></li>
             <li><a href="#" onclick="showContent('riwayat')"><i class="fas fa-history"></i> Riwayat Peminjaman</a></li>
-            <li><a href="#" onclick="showContent('hapus')"><i class="fas fa-trash-alt"></i> Kelola Buku</a></li>
         </ul>
     </div>
 
     <div class="main-content">
-        <!-- Halaman Welcome -->
-        <div id="admin" class="content-section">
-            <h1>Welcome to Admin Librio</h1>
-            <p>Pilihan menu di sebelah kiri.</p>
-        </div>
-
-        <!-- Halaman Tambah Buku -->
-        <div id="tambah" class="content-section" style="display: none;">
-            <h2>Tambah Buku</h2>
-            <form action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="mb-3">
-                    <label>Judul Buku</label>
-                    <input type="text" name="judul" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label>Penulis</label>
-                    <input type="text" name="penulis" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label>Penerbit</label>
-                    <input type="text" name="penerbit" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label>Tahun Terbit</label>
-                    <input type="number" name="tahun_terbit" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label>Stok</label>
-                    <input type="number" name="stok" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                  <label>Category</label>
-                  <select name="category_id" id="category" class="form-control">
-                    @foreach ($categories as $c)
-                      <option value="{{ $c->id }}">{{ $c->name }}</option>
-                    @endforeach
-                  </select>
-              </div>
-                <div class="mb-3">
-                    <label>Foto Buku</label>
-                    <input type="file" name="foto" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-success">Tambah Buku</button>
-            </form>
-        </div>
-
-        <!-- Halaman Riwayat Peminjaman -->
-<div id="riwayat" class="content-section" style="display: none;">
-    <h2>Riwayat Peminjaman</h2>
-
-    @if($peminjamans->isEmpty())
-        <p>Tidak ada data peminjaman.</p>
-    @else
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Judul Buku</th>
-                <th>Nama Peminjam</th>
-                <th>Tanggal Pinjam</th>
-                <th>Tanggal Kembali</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($peminjamans as $peminjaman)
-                <tr>
-                    <td>{{ $peminjaman->book->judul ?? 'Buku tidak ditemukan' }}</td>
-                    <td>{{ $peminjaman->nama_peminjam ?? '-' }}</td>
-                    <td>{{ $peminjaman->tanggal_pinjam ?? '-' }}</td>
-                    <td>{{ $peminjaman->tanggal_kembali ?? '-' }}</td>
-                    <td>{{ $peminjaman->status ?? '-' }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-    @endif
-</div>
-
-
-        <!-- Halaman Kelola Buku -->
-
-       <!-- Navbar Kategori dan Search -->
-        <div class="d-flex justify-content-between mb-3">
-            <!-- Dropdown Kategori -->
-            <form action="{{ route('filterKategori') }}" method="GET">
-                <select name="kategori">
-                    @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                </select>
-                <button type="submit">Filter</button>
-            </form>
-
-            <!-- Form Search -->
-            <form action="{{ route('buku.search') }}" method="GET" class="d-flex">
-                <input type="text" name="keyword" class="form-control me-2" placeholder="Cari buku..." value="{{ request('keyword') }}">
-                <button class="btn btn-primary" type="submit">Cari</button>
-            </form>
-        </div>
-        
-        <div id="hapus" class="content-section" style="display: none;">
+        <!-- Kelola Buku (ditampilkan pertama kali) -->
+        <div id="hapus" class="content-section">
             <h2>Kelola Buku</h2>
+
+            <!-- Filter Kategori dan Search -->
+            <div class="d-flex justify-content-between mb-3">
+                <form action="{{ route('filterKategori') }}" method="GET" class="d-flex">
+                    <select name="kategori" class="form-control me-2">
+                        <option value="">-- Semua Kategori --</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                    <button class="btn btn-secondary" type="submit">Filter</button>
+                </form>
+
+                <form action="{{ route('buku.search') }}" method="GET" class="d-flex">
+                    <input type="text" name="keyword" class="form-control me-2" placeholder="Cari buku..." value="{{ request('keyword') }}">
+                    <button class="btn btn-primary" type="submit">Cari</button>
+                </form>
+            </div>
+
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -165,16 +83,100 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Halaman Tambah Buku -->
+        <div id="tambah" class="content-section" style="display: none;">
+            <h2>Tambah Buku</h2>
+            <form action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="mb-3">
+                    <label>Judul Buku</label>
+                    <input type="text" name="judul" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label>Penulis</label>
+                    <input type="text" name="penulis" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label>Penerbit</label>
+                    <input type="text" name="penerbit" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label>Tahun Terbit</label>
+                    <input type="number" name="tahun_terbit" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label>Stok</label>
+                    <input type="number" name="stok" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label>Category</label>
+                    <select name="category_id" class="form-control">
+                        @foreach ($categories as $c)
+                            <option value="{{ $c->id }}">{{ $c->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label>Foto Buku</label>
+                    <input type="file" name="foto" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-success">Tambah Buku</button>
+            </form>
+        </div>
+
+        <!-- Halaman Riwayat Peminjaman -->
+        <div id="riwayat" class="content-section" style="display: none;">
+            <h2>Riwayat Peminjaman</h2>
+            @if($peminjamans->isEmpty())
+                <p>Tidak ada data peminjaman.</p>
+            @else
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Judul Buku</th>
+                        <th>Nama Peminjam</th>
+                        <th>Tanggal Pinjam</th>
+                        <th>Tanggal Kembali</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($peminjamans as $peminjaman)
+                    <tr>
+                        <td>{{ $peminjaman->book->judul ?? 'Buku tidak ditemukan' }}</td>
+                        <td>{{ $peminjaman->nama_peminjam ?? '-' }}</td>
+                        <td>{{ $peminjaman->tanggal_pinjam ?? '-' }}</td>
+                        <td>{{ $peminjaman->tanggal_kembali ?? '-' }}</td>
+                        <td>{{ $peminjaman->status ?? '-' }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            @endif
+        </div>
     </div>
 </div>
 
 <script>
     function showContent(sectionId) {
         const sections = document.querySelectorAll('.content-section');
-        sections.forEach(sec => sec.style.display = 'none');
-        const activeSection = document.getElementById(sectionId);
-        activeSection.style.display = 'block';
+        sections.forEach(el => el.style.display = 'none');
+        
+        const target = document.getElementById(sectionId);
+        if (target) {
+            target.style.display = 'block';
+        }
     }
+
+    // Tampilkan 'Kelola Buku' saat halaman dibuka, atau dari session jika ada
+    document.addEventListener('DOMContentLoaded', function () {
+        @if(session('section'))
+            showContent('{{ session('section') }}');
+        @else
+            showContent('hapus');
+        @endif
+    });
 </script>
 
 </body>

@@ -12,25 +12,22 @@ class PeminjamanController extends Controller
     /**
      * Fungsi untuk meminjam buku
      */
-
-     public function index()
+    public function index()
     {
-    $books = Book::all();
-    $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
-
-    return view('buku', compact('books', 'peminjamans'));
-
-
+        $books = Book::all();
+        $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
+        
+        return view('buku', compact('books', 'peminjamans'));
     }
-
-     public function __construct()
+    
+    public function __construct()
     {
         $this->middleware('auth');
     }
     
     public function pinjam(Request $request)
     {
-        // validasi 
+        // validasi
         $buku = Book::findOrFail($request->id_buku);
         
         if ($buku->stok < 1) {
@@ -49,7 +46,7 @@ class PeminjamanController extends Controller
         // Kurangi stok
         $buku->decrement('stok');
         
-        return back()->with('success', 'Buku berhasil dipinjam');
+        return back()->with('success', 'Buku berhasil dipinjam. Jatuh tempo 4 hari dari sekarang: ' . now()->addDays(4)->format('d M Y'));
     }
     
     /**
@@ -90,6 +87,4 @@ class PeminjamanController extends Controller
         $buku = Book::findOrFail($id);
         return view('peminjaman', compact('buku'));
     }
-
-    
 }

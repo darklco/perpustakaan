@@ -32,31 +32,85 @@ namespace App\Http\Controllers;
 
         public function filterKategori(Request $request)
         {
-            $kategoriId = $request->kategori;
+            $query = Book::with('category');
+        
+            if ($request->kategori) {
+                $query->where('category_id', $request->kategori);
+            }
+        
+            if ($request->keyword) {
+                $query->where('judul', 'like', '%' . $request->keyword . '%');
+            }
+        
+            $books = $query->get();
+        
+            if ($request->ajax()) {
+                return view('partials.table-buku', compact('books'));
+            }
+        
             $categories = Category::all();
-            $books = Book::where('category_id', $kategoriId)->get();
-            
             $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
         
-            return view('DashboardAdmin', compact('books', 'categories', 'peminjamans'));
+            return view('dashboardadmin', [
+                'books' => $books,
+                'categories' => $categories,
+                'peminjamans' => $peminjamans,
+                'section' => 'hapus'
+            ]);
         }
-
+        
+        
         public function search(Request $request)
         {
             $keyword = $request->keyword;
-            $categories = Category::all();
-            
-            // Pencarian yang ditingkatkan untuk mencari berdasarkan beberapa kolom
+        
             $books = Book::where('judul', 'like', "%$keyword%")
-                         ->orWhere('penulis', 'like', "%$keyword%")
-                         ->orWhere('penerbit', 'like', "%$keyword%")
-                         ->orWhere('tahun_terbit', 'like', "%$keyword%")
-                         ->get();
-            
+                        ->orWhere('penulis', 'like', "%$keyword%")
+                        ->orWhere('penerbit', 'like', "%$keyword%")
+                        ->orWhere('tahun_terbit', 'like', "%$keyword%")
+                        ->get();
+        
+            if ($request->ajax()) {
+                return view('partials.table-buku', compact('books'));
+            }
+        
+            $categories = Category::all();
             $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
         
-            return view('DashboardAdmin', compact('books', 'categories', 'peminjamans'));
+            return view('dashboardadmin', [
+                'books' => $books,
+                'categories' => $categories,
+                'peminjamans' => $peminjamans,
+                'section' => 'hapus'
+            ]);
         }
+
+        // search untuk user
+        public function searchuser(Request $request)
+        {
+            $keyword = $request->keyword;
+        
+            $books = Book::where('judul', 'like', "%$keyword%")
+                        ->orWhere('penulis', 'like', "%$keyword%")
+                        ->orWhere('penerbit', 'like', "%$keyword%")
+                        ->orWhere('tahun_terbit', 'like', "%$keyword%")
+                        ->get();
+        
+            if ($request->ajax()) {
+                return view('partials.table-buku', compact('books'));
+            }
+        
+            $categories = Category::all();
+            $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
+        
+            return view('dashboardadmin', [
+                'books' => $books,
+                'categories' => $categories,
+                'peminjamans' => $peminjamans,
+                'section' => 'hapus'
+            ]);
+        }
+        
 
         // Menampilkan halaman dashboard admin
         public function dashboard()
@@ -97,7 +151,8 @@ namespace App\Http\Controllers;
             
             Book::create($validated);
             
-            return redirect()->route('books.index')->with('success', 'Buku berhasil ditambahkan.');
+            // Mengubah redirect ke dashboard admin
+            return redirect()->route('dashboard.admin')->with('success', 'Buku berhasil ditambahkan.');
         }
         
         // Menampilkan form edit buku
@@ -133,7 +188,8 @@ namespace App\Http\Controllers;
             
             $book->update($validated);
             
-            return redirect()->route('books.index')->with('success', 'Buku berhasil diperbarui.');
+            // Mengubah redirect ke dashboard admin
+            return redirect()->route('dashboarddmin')->with('success', 'Buku berhasil diperbarui.');
         }
         
         // Menghapus buku
@@ -144,7 +200,8 @@ namespace App\Http\Controllers;
             }
             
             $book->delete();
-            return redirect()->route('books.index')->with('success', 'Buku berhasil dihapus.');
+            // Mengubah redirect ke dashboard admin
+            return redirect()->route('DashboardAdmin')->with('success', 'Buku berhasil dihapus.');
         }
 
         public function formPinjam($id)
@@ -161,6 +218,7 @@ namespace App\Http\Controllers;
             // Logic to process the book loan
             // ...
             
+            // Ini sudah benar, tetap mengarah ke dashboard user
             return redirect()->route('dashboard.user')->with('success', 'Buku berhasil dipinjam');
         }
 
