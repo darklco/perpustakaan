@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
     use Illuminate\Http\Request;
     use App\Models\Book;
     use App\Models\Category; 
-    use App\Models\peminjaman;
+    use App\Models\Peminjaman; // PERBAIKAN: Pastikan P kapital
 
     class BookController extends Controller
     {
@@ -12,9 +12,10 @@ namespace App\Http\Controllers;
         public function index()
         {
             $books = Book::all();
+            $categories = Category::all(); // TAMBAHAN: untuk konsistensi
             $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
 
-            return view('buku', compact('books', 'peminjamans'));
+            return view('buku', compact('books', 'categories', 'peminjamans'));
         }
         
         public function filterKategoriuser($kategori)
@@ -26,16 +27,15 @@ namespace App\Http\Controllers;
 
             $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
             
-            return view('buku', compact('books', 'categories', 'peminjamans')); // Added peminjamans to compact
+            return view('buku', compact('books', 'categories', 'peminjamans'));
         }
 
         public function filterKategori(Request $request)
         {
             $kategoriId = $request->kategori;
-            $categories = Category::all(); // untuk select dropdown
+            $categories = Category::all();
             $books = Book::where('category_id', $kategoriId)->get();
             
-            // Define $peminjamans before using it in compact
             $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
         
             return view('DashboardAdmin', compact('books', 'categories', 'peminjamans'));
@@ -44,13 +44,18 @@ namespace App\Http\Controllers;
         public function search(Request $request)
         {
             $keyword = $request->keyword;
-            $categories = Category::all(); // untuk select dropdown
-            $books = Book::where('judul', 'like', "%$keyword%")->get();
+            $categories = Category::all();
             
-            // Define $peminjamans if it's used in the view
+            // Pencarian yang ditingkatkan untuk mencari berdasarkan beberapa kolom
+            $books = Book::where('judul', 'like', "%$keyword%")
+                         ->orWhere('penulis', 'like', "%$keyword%")
+                         ->orWhere('penerbit', 'like', "%$keyword%")
+                         ->orWhere('tahun_terbit', 'like', "%$keyword%")
+                         ->get();
+            
             $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
         
-            return view('DashboardAdmin', compact('books', 'categories', 'peminjamans')); // Added peminjamans to compact
+            return view('DashboardAdmin', compact('books', 'categories', 'peminjamans'));
         }
 
         // Menampilkan halaman dashboard admin
@@ -58,16 +63,19 @@ namespace App\Http\Controllers;
         {
             $books = Book::all();
             $categories = Category::all();
-            $peminjamans = Peminjaman::with('book')->get(); // relasi ke buku (jika ada)
+            $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
             
-            return view('DashboardAdmin', compact('books'));
+            return view('DashboardAdmin', compact('books', 'categories', 'peminjamans'));
         }
         
         // Menampilkan form tambah buku
         public function create()
         {
-            $categories = Category::all(); // Tambahkan data kategori
-            return view('books.create', compact('categories')); // Kirim data kategori ke view
+            $categories = Category::all(); 
+            // TAMBAHAN: Jika view books.create membutuhkan $peminjamans
+            $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
+            
+            return view('books.create', compact('categories', 'peminjamans'));
         }
         
         // Menyimpan buku baru
@@ -79,7 +87,7 @@ namespace App\Http\Controllers;
                 'penerbit' => 'required|string|max:255',
                 'tahun_terbit' => 'required|digits:4|integer',
                 'stok' => 'required|integer|min:0',
-                'category_id' => 'required', // konsisten pakai category_id
+                'category_id' => 'required',
                 'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             ]);
             
@@ -95,8 +103,11 @@ namespace App\Http\Controllers;
         // Menampilkan form edit buku
         public function edit(Book $book)
         {
-            $categories = Category::all(); // Tambahkan data kategori
-            return view('editbuku', compact('book', 'categories')); // Kirim data kategori ke view
+            $categories = Category::all();
+            // TAMBAHAN: Jika view editbuku membutuhkan $peminjamans
+            $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
+            
+            return view('editbuku', compact('book', 'categories', 'peminjamans'));
         }
         
         // Update data buku
@@ -108,12 +119,11 @@ namespace App\Http\Controllers;
                 'penerbit' => 'required|string|max:255',
                 'tahun_terbit' => 'required|digits:4|integer',
                 'stok' => 'required|integer|min:0',
-                'category_id' => 'required', // konsisten
+                'category_id' => 'required',
                 'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             ]);
             
             if ($request->hasFile('foto')) {
-                // Hapus foto lama jika ada
                 if ($book->foto) {
                     \Illuminate\Support\Facades\Storage::delete('public/' . $book->foto);
                 }
@@ -129,7 +139,6 @@ namespace App\Http\Controllers;
         // Menghapus buku
         public function destroy(Book $book)
         {
-            // Hapus file foto jika ada
             if ($book->foto) {
                 \Illuminate\Support\Facades\Storage::delete('public/' . $book->foto);
             }
@@ -140,11 +149,11 @@ namespace App\Http\Controllers;
 
         public function formPinjam($id)
         {
-            // Get the book by ID
             $book = Book::findOrFail($id);
+            // TAMBAHAN: Jika view peminjaman.form membutuhkan $peminjamans
+            $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
             
-            // Return the view with the book data
-            return view('peminjaman.form', compact('book'));
+            return view('peminjaman.form', compact('book', 'peminjamans'));
         }
 
         public function pinjam(Request $request)
@@ -155,8 +164,12 @@ namespace App\Http\Controllers;
             return redirect()->route('dashboard.user')->with('success', 'Buku berhasil dipinjam');
         }
 
-        public function show($id){
+        public function show($id)
+        {
             $book = Book::findOrFail($id);
-            return view('showbuku', compact('book'));
+            // TAMBAHAN: Jika view showbuku membutuhkan $peminjamans
+            $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
+            
+            return view('showbuku', compact('book', 'peminjamans'));
         }
     }
