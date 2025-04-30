@@ -92,7 +92,7 @@ nav {
   color: white;
 }
 .home .image {
-  background-image: url("public/images/bg3.jpg");
+  background-image: url("/images/bg3.jpg");
   background-size: cover;
   background-position: center;
   width: 50%;

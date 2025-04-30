@@ -1,27 +1,32 @@
 $primary-color: #6b4c3b;
 $secondary-color: #a1866f;
-$background-color: #f5f0eb; 
-$text-color: #3e2c23; 
+$background-color: #f5f0eb;
+$text-color: #3e2c23;
+$white-color: #ffffff;  
 
 // Navbar
 .navbar {
-  background-color: lighten($primary-color, 20%) !important;
+  background-color: #e0c9a6 !important;
 
   .navbar-brand,
   .nav-link {
-    color: $text-color !important; 
+    color: $text-color !important;
     font-weight: bold;
 
     &:hover {
-      color: darken($text-color, 10%) !important; 
+      color: darken($text-color, 20%) !important;
     }
+  }
+
+  .btn-link {
+    padding: 0;
   }
 }
 
-// Sidebar kategori
+// Sidebar Kategori
 .sidebar {
   background-color: $background-color;
-  
+
   .nav-link {
     color: $text-color !important;
     font-weight: bold;
@@ -41,34 +46,32 @@ $text-color: #3e2c23;
 .btn-danger {
   background-color: $primary-color !important;
   border-color: $primary-color !important;
-  color: $background-color !important; 
+  color: $background-color !important;
 
   &:hover {
     background-color: darken($primary-color, 10%) !important;
-    border-color: darken($primary-color, 10%) !important;
-    color: $background-color !important;
+    border-color: darken($primary-color, 10%) ;
   }
 }
 
-// Tombol secondary
-.btn-secondary {
+.btn-secondary,
+.btn-outline-secondary {
   background-color: $secondary-color !important;
   border-color: $secondary-color !important;
   color: $background-color !important;
 
   &:hover {
     background-color: darken($secondary-color, 10%) !important;
-    border-color: darken($secondary-color, 10%) !important;
-    color: $background-color !important;
+    border-color: darken($secondary-color, 10%) ;
   }
 }
 
-// Card
+// Card Buku
 .card {
   border: none;
   background-color: lighten($primary-color, 35%);
   color: $text-color;
-  
+
   .card-header {
     background-color: $primary-color;
     color: $background-color;
@@ -80,18 +83,141 @@ $text-color: #3e2c23;
   }
 }
 
-// Badge kategori
+// Badge
 .badge {
   background-color: $primary-color;
   color: $background-color;
 }
 
-// Table di halaman show
+// Table
 .table {
   th {
-    color: $primary-color;
+    color: $white-color;
+    font-weight: bold;
   }
+
   td {
-    color: $text-color;
+    color: $white-color;
+  }
+
+  &.table-dark {
+    background-color: darken($primary-color, 10%);
+    th {
+      color: $background-color;
+    }
+  }
+}
+
+.table-bordered {
+  border-color: $primary-color;
+
+  th, td {
+    background-color: $primary-color;
+    color: $white-color;
+  }
+
+  th {
+    background-color: $primary-color;
+    font-weight: bold;
+  }
+
+  tr:nth-child(odd) {
+    background-color: lighten($primary-color, 30%);
+  }
+
+  tr:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+// Grid Buku
+.book-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+
+  .book-card {
+    flex: 0 0 250px;
+    min-width: 250px;
+
+    @media (min-width: 992px) {
+      flex: 0 0 16.66%;
+    }
+
+    .card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .card-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+    }
+  }
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $primary-color;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: lighten($primary-color, 35%);
+  }
+}
+
+// Sidebar Kategori 
+.kategori-sidebar {
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 0.5rem 0;
+
+  a {
+    display: inline-block;
+    margin-right: 0.5rem;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: row;
+
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $primary-color;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: lighten($primary-color, 30%);
+    }
+  }
+}
+
+.table-responsive {
+  overflow-x: auto;
+  margin-top: 2rem;
+  
+  @media (max-width: 768px) {
+    .table {
+      font-size: 12px;
+    }
   }
 }

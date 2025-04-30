@@ -9,36 +9,40 @@
 </head>
 <body>
 
-<!-- Navbar di Atas -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
     <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
-            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand fw-bold text-dark" href="#">Librio</a>
+
+        <!-- Tombol Hamburgernya -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <!-- Navbarnya -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+            <ul class="navbar-nav align-items-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('buku') }}">Semua</a>
+                    <a class="nav-link text-dark" href="#home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('buku.kategori', ['kategori' => 'Novel']) }}">Novel</a>
+                    <a class="nav-link text-dark" href="#tentang">Tentang Kami</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('buku.kategori', ['kategori' => 'Ilmiah']) }}">Ilmiah</a>
+                    <a class="nav-link text-dark" href="#footer">Kontak</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('buku.kategori', ['kategori' => 'Komik']) }}">Komik</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('buku.kategori', ['kategori' => 'Biografi']) }}">Biografi</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-link nav-link text-dark p-0">Logout</button>
+                    </form>
                 </li>
             </ul>
-            
+
         </div>
     </div>
 </nav>
+
 
 <!-- Konten -->
 <div class="container mt-4">

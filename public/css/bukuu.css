@@ -1,5 +1,5 @@
 .navbar {
-  background-color: #a97c63 !important;
+  background-color: #e0c9a6 !important;
 }
 .navbar .navbar-brand,
 .navbar .nav-link {
@@ -8,7 +8,10 @@
 }
 .navbar .navbar-brand:hover,
 .navbar .nav-link:hover {
-  color: #1d1511 !important;
+  color: black !important;
+}
+.navbar .btn-link {
+  padding: 0;
 }
 
 .sidebar {
@@ -39,19 +42,19 @@
 .btn-warning:hover,
 .btn-danger:hover {
   background-color: #4a3529 !important;
-  border-color: #4a3529 !important;
-  color: #f5f0eb !important;
+  border-color: #4a3529;
 }
 
-.btn-secondary {
+.btn-secondary,
+.btn-outline-secondary {
   background-color: #a1866f !important;
   border-color: #a1866f !important;
   color: #f5f0eb !important;
 }
-.btn-secondary:hover {
+.btn-secondary:hover,
+.btn-outline-secondary:hover {
   background-color: #866d57 !important;
-  border-color: #866d57 !important;
-  color: #f5f0eb !important;
+  border-color: #866d57;
 }
 
 .card {
@@ -74,8 +77,114 @@
 }
 
 .table th {
-  color: #6b4c3b;
+  color: #ffffff;
+  font-weight: bold;
 }
 .table td {
-  color: #3e2c23;
+  color: #ffffff;
+}
+.table.table-dark {
+  background-color: #4a3529;
+}
+.table.table-dark th {
+  color: #f5f0eb;
+}
+
+.table-bordered {
+  border-color: #6b4c3b;
+}
+.table-bordered th, .table-bordered td {
+  background-color: #6b4c3b;
+  color: #ffffff;
+}
+.table-bordered th {
+  background-color: #6b4c3b;
+  font-weight: bold;
+}
+.table-bordered tr:nth-child(odd) {
+  background-color: #bb9784;
+}
+.table-bordered tr:hover {
+  background-color: #4a3529;
+}
+
+.book-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+}
+.book-grid .book-card {
+  flex: 0 0 250px;
+  min-width: 250px;
+}
+@media (min-width: 992px) {
+  .book-grid .book-card {
+    flex: 0 0 16.66%;
+  }
+}
+.book-grid .book-card .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.book-grid .book-card .card img {
+  width: 100%;
+  height: 200px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.book-grid .book-card .card .card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.book-grid::-webkit-scrollbar {
+  height: 6px;
+}
+.book-grid::-webkit-scrollbar-thumb {
+  background-color: #6b4c3b;
+  border-radius: 5px;
+}
+.book-grid::-webkit-scrollbar-track {
+  background-color: #c4a594;
+}
+
+.kategori-sidebar {
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 0.5rem 0;
+}
+.kategori-sidebar a {
+  display: inline-block;
+  margin-right: 0.5rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+@media (max-width: 768px) {
+  .kategori-sidebar {
+    display: flex;
+    flex-direction: row;
+  }
+  .kategori-sidebar::-webkit-scrollbar {
+    height: 4px;
+  }
+  .kategori-sidebar::-webkit-scrollbar-thumb {
+    background: #6b4c3b;
+  }
+  .kategori-sidebar::-webkit-scrollbar-track {
+    background: #bb9784;
+  }
+}
+
+.table-responsive {
+  overflow-x: auto;
+  margin-top: 2rem;
+}
+@media (max-width: 768px) {
+  .table-responsive .table {
+    font-size: 12px;
+  }
 }/*# sourceMappingURL=bukuu.css.map */
