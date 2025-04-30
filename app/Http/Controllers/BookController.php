@@ -97,7 +97,8 @@ namespace App\Http\Controllers;
             
             Book::create($validated);
             
-            return redirect()->route('books.index')->with('success', 'Buku berhasil ditambahkan.');
+            // Mengubah redirect ke dashboard admin
+            return redirect()->route('dashboard.admin')->with('success', 'Buku berhasil ditambahkan.');
         }
         
         // Menampilkan form edit buku
@@ -133,7 +134,8 @@ namespace App\Http\Controllers;
             
             $book->update($validated);
             
-            return redirect()->route('books.index')->with('success', 'Buku berhasil diperbarui.');
+            // Mengubah redirect ke dashboard admin
+            return redirect()->route('DashboardAdmin')->with('success', 'Buku berhasil diperbarui.');
         }
         
         // Menghapus buku
@@ -144,7 +146,8 @@ namespace App\Http\Controllers;
             }
             
             $book->delete();
-            return redirect()->route('books.index')->with('success', 'Buku berhasil dihapus.');
+            // Mengubah redirect ke dashboard admin
+            return redirect()->route('DashboardAdmin')->with('success', 'Buku berhasil dihapus.');
         }
 
         public function formPinjam($id)
@@ -161,6 +164,7 @@ namespace App\Http\Controllers;
             // Logic to process the book loan
             // ...
             
+            // Ini sudah benar, tetap mengarah ke dashboard user
             return redirect()->route('dashboard.user')->with('success', 'Buku berhasil dipinjam');
         }
 
