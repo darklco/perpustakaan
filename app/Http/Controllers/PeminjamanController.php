@@ -10,7 +10,15 @@ use Carbon\Carbon;
 class PeminjamanController extends Controller
 {
     /**
-     * Fungsi untuk meminjam buku
+     * Middleware auth untuk semua method
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
+     * Halaman utama peminjaman
      */
     public function index()
     {
@@ -20,11 +28,9 @@ class PeminjamanController extends Controller
         return view('buku', compact('books', 'peminjamans'));
     }
     
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
+    /**
+     * Proses peminjaman buku
+     */
     public function pinjam(Request $request)
     {
         // validasi
@@ -49,13 +55,17 @@ class PeminjamanController extends Controller
         return redirect()->route('peminjaman.tabel')->with('success', 'Buku berhasil dipinjam!');
     }
 
+    /**
+     * Menampilkan tabel peminjaman
+     */
     public function showTabel()
     {
         $peminjamans = Peminjaman::with('book')->where('user_id', auth()->id())->get();
-
+        
+        // Tidak perlu menambahkan jatuh_tempo_text di sini karena sudah ada accessor di model
+        
         return view('peminjaman.tabel', compact('peminjamans'));
     }
-
     
     /**
      * Fungsi untuk mengembalikan buku

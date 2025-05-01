@@ -1,69 +1,73 @@
-{{-- resources/views/peminjaman/tabel.blade.php --}}
-@extends('layout.buku')
-
-@section('content')
-<div class="container py-5">
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Buku yang Dipinjam</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f3f4f6;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
     {{-- Alert --}}
     @if (session('success'))
         <div class="alert alert-success text-center">{{ session('success') }}</div>
     @endif
 
-    <h2 class="mb-4 text-center">Daftar Buku yang Dipinjam</h2>
-
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-            <thead class="table-dark">
-                <tr class="text-center">
-                    <th>No</th>
-                    <th>Judul Buku</th>
-                    <th>Tanggal Pinjam</th>
-                    <th>Jatuh Tempo</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($peminjamans as $peminjaman)
-                    <tr class="text-center">
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $peminjaman->book->judul }}</td>
-                        <td>{{ \Carbon\Carbon::parse($peminjaman->tanggal_pinjam)->format('d M Y') }}</td>
-                        @php
-                            $jatuhTempo = \Carbon\Carbon::parse($peminjaman->jatuh_tempo);
-                            $now = \Carbon\Carbon::now();
-                            $selisihHari = $now->diffInDays($jatuhTempo, false);
-                        @endphp
-
-                        <td class="{{ $selisihHari < 0 ? 'bg-danger text-white' : '' }}">
-                            {{ $jatuhTempo->format('d M Y') }}
-                            <br>
-                            <small>
-                                @if ($selisihHari > 0)
-                                    {{ $selisihHari }} hari tersisa
-                                @elseif ($selisihHari === 0)
-                                    <span class="text-warning">Hari ini batas akhir</span>
-                                @else
-                                    <span class="text-warning">{{ abs($selisihHari) }} hari terlambat</span>
-                                @endif
-                            </small>
-                        </td>
-
-                        <td>
-                            <form action="{{ route('peminjaman.kembalikan') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="id" value="{{ $peminjaman->id }}">
-                                <button type="submit" class="btn btn-warning btn-sm">Kembalikan</button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="5" class="text-center">Belum ada buku yang dipinjam.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+    <h1 class="text-center">Daftar Buku yang Dipinjam</h1>
+    
+    <div class="mb-3">
+        <a href="{{ route('buku') }}" class="btn btn-secondary">← Kembali ke Daftar Buku</a>
     </div>
 
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>No</th>
+                <th>Judul Buku</th>
+                <th>Tanggal Pinjam</th>
+                <th>Jatuh Tempo</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($peminjamans as $index => $peminjaman)
+                @if($peminjaman->status == 'dipinjam')
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $peminjaman->book->judul }}</td>
+                    <td>{{ $peminjaman->tanggal_pinjam->format('d M Y') }}</td>
+                    <td>
+                        {{ $peminjaman->jatuh_tempo_text }}
+                        @if(Carbon\Carbon::now()->gt($peminjaman->jatuh_tempo))
+                            <span class="text-danger">Hari ini batas akhir</span>
+                        @endif
+                    </td>
+                    <td>
+                        <form action="{{ route('peminjaman.kembalikan') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $peminjaman->id }}">
+                            <button type="submit" class="btn btn-warning">Kembalikan</button>
+                        </form>
+                    </td>
+                </tr>
+                @endif
+            @empty
+                <tr>
+                    <td colspan="5" class="text-center">Tidak ada buku yang sedang dipinjam</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
 </div>
-@endsection

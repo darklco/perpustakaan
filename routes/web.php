@@ -7,6 +7,11 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\AdminDashboardController;
 
+Route::get('/akun', function () {
+    return view('user.account');
+})->middleware('auth')->name('account');
+
+
 // Auth routes
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
@@ -56,5 +61,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
     // search user
-    Route::get('/buku/search', [BookController::class, 'searchuser'])->name('search.user');
+    Route::get('/search', [BookController::class, 'searchuser'])->name('search.user');
+    
 

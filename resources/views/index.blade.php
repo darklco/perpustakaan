@@ -18,10 +18,8 @@
         <li><a href="#home">Home</a></li>
         <li><a href="#tentang">Tentang Kami</a></li>
         <li><a href="#footer">Kontak</a></li>
-        <li>
-          <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-            @csrf
-            <button type="submit">Logout</button>
+        <li><a href="{{ route('account') }}" class="text-blue-600 hover:underline">Akun Saya</a>
+
           </form>
         </li>
       </ul>
