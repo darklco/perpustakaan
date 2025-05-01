@@ -437,26 +437,3 @@ footer.footer .footer-content .footer-icons i {
 .carousel-btn:hover {
   background-color: #8c5d42;
 }/*# sourceMappingURL=index.css.map */
-
-.card-buttons {
-  margin-top: 10px;
-}
-
-.card-buttons a {
-  display: inline-block;
-  margin: 5px 3px;
-  padding: 6px 12px;
-  background-color: #0066cc;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 14px;
-}
-
-.card-buttons a.btn-pinjam {
-  background-color: #28a745;
-}
-
-.card-buttons a:hover {
-  opacity: 0.9;
-}

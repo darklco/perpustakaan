@@ -2,7 +2,7 @@ $primary-color: #6b4c3b;
 $secondary-color: #a1866f;
 $background-color: #f5f0eb;
 $text-color: #3e2c23;
-$white-color: #ffffff;  
+$white-color: #ffffff;
 
 // Navbar
 .navbar {
@@ -50,7 +50,7 @@ $white-color: #ffffff;
 
   &:hover {
     background-color: darken($primary-color, 10%) !important;
-    border-color: darken($primary-color, 10%) ;
+    border-color: darken($primary-color, 10%);
   }
 }
 
@@ -62,7 +62,7 @@ $white-color: #ffffff;
 
   &:hover {
     background-color: darken($secondary-color, 10%) !important;
-    border-color: darken($secondary-color, 10%) ;
+    border-color: darken($secondary-color, 10%);
   }
 }
 
@@ -102,6 +102,7 @@ $white-color: #ffffff;
 
   &.table-dark {
     background-color: darken($primary-color, 10%);
+
     th {
       color: $background-color;
     }
@@ -116,8 +117,9 @@ $white-color: #ffffff;
     color: $white-color;
   }
 
+  
   th {
-    background-color: $primary-color;
+
     font-weight: bold;
   }
 
@@ -130,20 +132,28 @@ $white-color: #ffffff;
   }
 }
 
-// Grid Buku
+// Grid Buku (infinite scroll siap)
 .book-grid {
   display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  flex-wrap: wrap;
   gap: 1.5rem;
+  justify-content: flex-start;
   padding-bottom: 1rem;
 
   .book-card {
-    flex: 0 0 250px;
-    min-width: 250px;
+    flex: 0 0 calc(25% - 1.5rem);
+    box-sizing: border-box;
 
-    @media (min-width: 992px) {
-      flex: 0 0 16.66%;
+    @media (max-width: 992px) {
+      flex: 0 0 calc(33.33% - 1rem);
+    }
+
+    @media (max-width: 768px) {
+      flex: 0 0 calc(50% - 1rem);
+    }
+
+    @media (max-width: 576px) {
+      flex: 0 0 100%;
     }
 
     .card {
@@ -180,7 +190,7 @@ $white-color: #ffffff;
   }
 }
 
-// Sidebar Kategori 
+// Sidebar Kategori scrollable
 .kategori-sidebar {
   overflow-x: auto;
   white-space: nowrap;
@@ -211,10 +221,40 @@ $white-color: #ffffff;
   }
 }
 
+// Form Pencarian di pojok kanan
+.search-form {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+
+  input {
+    max-width: 200px;
+  }
+
+  @media (max-width: 576px) {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 1rem;
+    justify-content: flex-start;
+  }
+}
+
+// Loader Infinite Scroll
+#loader {
+  text-align: center;
+  margin-top: 20px;
+
+  img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+// Table responsive
 .table-responsive {
   overflow-x: auto;
   margin-top: 2rem;
-  
+
   @media (max-width: 768px) {
     .table {
       font-size: 12px;

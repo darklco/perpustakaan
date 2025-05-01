@@ -31,6 +31,9 @@ Route::get('/buku/kategori/{kategori}', [BookController::class, 'filterKategoriu
 // Jika ingin ada POST ke /buku, misal untuk menambah buku atau pencarian
 Route::post('/buku', [BookController::class, 'store'])->name('buku.store');
 
+// Rute untuk load more books (AJAX)
+Route::get('/buku/load-more', [BookController::class, 'loadMoreBooks'])->name('buku.loadMore');
+
 Route::middleware(['auth'])->group(function () {
     // Route index setelah login
     Route::get('/', [AuthController::class, 'index'])->name('index');
