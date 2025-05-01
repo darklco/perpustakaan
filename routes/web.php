@@ -19,6 +19,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Public routes untuk buku
 Route::get('/buku', [PeminjamanController::class, 'index'])->name('buku'); // <<<--- diperbaiki ke PeminjamanController
 Route::get('/buku/{id}', [BookController::class, 'show'])->name('showbuku');
+Route::get('/peminjaman/tabel', [PeminjamanController::class, 'showTabel'])->name('peminjaman.tabel');
+
 Route::get('/buku/kategori/{kategori}', [BookController::class, 'filterKategoriuser'])->name('buku.kategori');
 
 // Jika ingin ada POST ke /buku, misal untuk menambah buku atau pencarian
@@ -52,3 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/peminjaman/pinjam', [PeminjamanController::class, 'pinjam'])->name('peminjaman.pinjam');
     Route::post('/peminjaman/kembalikan', [PeminjamanController::class, 'kembalikan'])->name('peminjaman.kembalikan');
 });
+
+    // search user
+    Route::get('/buku/search', [BookController::class, 'searchuser'])->name('search.user');
+

@@ -11,6 +11,9 @@
         <div class="alert alert-danger text-center">{{ session('error') }}</div>
     @endif
 
+    {{-- Daftar Buku --}}
+    <h1 class="mb-4 text-center">Daftar Buku</h1>
+
     {{-- Filter Kategori dan Pencarian --}}
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
         <div class="kategori-sidebar d-flex flex-wrap gap-2">
@@ -20,15 +23,16 @@
             <a href="{{ route('buku.kategori', ['kategori' => 'Komik']) }}" class="btn btn-outline-secondary btn-sm {{ request()->kategori == 'Komik' ? 'active' : '' }}">Komik</a>
             <a href="{{ route('buku.kategori', ['kategori' => 'Biografi']) }}" class="btn btn-outline-secondary btn-sm {{ request()->kategori == 'Biografi' ? 'active' : '' }}">Biografi</a>
         </div>
-        <form action="#" method="GET" class="d-flex mt-2 mt-md-0">
-            <input type="text" name="query" class="form-control me-2" placeholder="Cari judul buku..." />
-            <button type="submit" class="btn btn-primary">Cari</button>
-        </form>
-    </div>
-
-    {{-- Daftar Buku --}}
-    <h1 class="mb-4 text-center">Daftar Buku</h1>
     
+    
+    
+    <form action="{{ route('search.user') }}" method="GET" class="d-flex mt-2 mt-md-0">
+        <input type="text" name="query" value="{{ request('query') }}" class="form-control me-2" placeholder="Cari judul buku..." />
+        <button type="submit" class="btn btn-primary">Cari</button>
+    </form>
+
+    
+
     <div id="book-container">
     </div>
     <div class="container-fluid">
@@ -64,63 +68,7 @@
         </div>
     </div>
 
-    {{-- Daftar Peminjaman --}}
-    <hr class="my-5">
-    <h2 class="mb-4 text-center">Daftar Buku yang Dipinjam</h2>
-
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-            <thead class="table-dark">
-                <tr class="text-center">
-                    <th>No</th>
-                    <th>Judul Buku</th>
-                    <th>Tanggal Pinjam</th>
-                    <th>Jatuh Tempo</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($peminjamans as $peminjaman)
-                    <tr class="text-center">
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $peminjaman->book->judul }}</td>
-                        <td>{{ \Carbon\Carbon::parse($peminjaman->tanggal_pinjam)->format('d M Y') }}</td>
-                        @php
-                    $jatuhTempo = \Carbon\Carbon::parse($peminjaman->jatuh_tempo);
-                    $now = \Carbon\Carbon::now();
-                    $selisihHari = $now->diffInDays($jatuhTempo, false); // false agar dapat negatif jika telat
-                @endphp
-
-                <td class="{{ $selisihHari < 0 ? 'bg-danger text-white' : '' }}">
-                    {{ $jatuhTempo->format('d M Y') }}
-                    <br>
-                    <small>
-                        @if ($selisihHari > 0)
-                            {{ $selisihHari }} hari tersisa
-                        @elseif ($selisihHari === 0)
-                            <span class="text-warning">Hari ini batas akhir</span>
-                        @else
-                            <span class="text-warning">{{ abs($selisihHari) }} hari terlambat</span>
-                        @endif
-                    </small>
-                </td>
-
-                        <td>
-                            <form action="{{ route('peminjaman.kembalikan') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="id" value="{{ $peminjaman->id }}">
-                                <button type="submit" class="btn btn-warning btn-sm">Kembalikan</button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="5" class="text-center">Belum ada buku yang dipinjam.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+    
 
 </div>
 @endsection

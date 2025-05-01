@@ -46,8 +46,16 @@ class PeminjamanController extends Controller
         // Kurangi stok
         $buku->decrement('stok');
         
-        return back()->with('success', 'Buku berhasil dipinjam. Jatuh tempo 4 hari dari sekarang: ' . now()->addDays(4)->format('d M Y'));
+        return redirect()->route('peminjaman.tabel')->with('success', 'Buku berhasil dipinjam!');
     }
+
+    public function showTabel()
+    {
+        $peminjamans = Peminjaman::with('book')->where('user_id', auth()->id())->get();
+
+        return view('peminjaman.tabel', compact('peminjamans'));
+    }
+
     
     /**
      * Fungsi untuk mengembalikan buku

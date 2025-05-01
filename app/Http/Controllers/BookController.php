@@ -100,33 +100,24 @@ namespace App\Http\Controllers;
 
         // search untuk user
         public function searchuser(Request $request)
-        {
-            $keyword = $request->keyword;
-        
-            $books = Book::where('judul', 'like', "%$keyword%")
-                        ->orWhere('penulis', 'like', "%$keyword%")
-                        ->orWhere('penerbit', 'like', "%$keyword%")
-                        ->orWhere('tahun_terbit', 'like', "%$keyword%")
-                        ->get();
+{
+    $query = $request->input('query');
 
-                        $bestSellers = Book::take(7)->get();
+    $books = \App\Models\Book::query();
+
+    if ($query) {
+        $books = $books->where('judul', 'like', '%' . $query . '%');
+    }
+
+    $books = $books->latest()->get();
+
+    // Peminjaman bisa ikut disertakan jika perlu
+    $peminjamans = \App\Models\Peminjaman::with('book')->where('user_id', auth()->id())->get();
+
+    return view('buku.index', compact('books', 'peminjamans'));
+}
+
         
-            if ($request->ajax()) {
-                return view('partials.table-buku', compact('books'));
-            }
-            
-        
-            $categories = Category::all();
-            $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
-            $bestSellers = Book::with('category')->take(7)->get();
-        
-            return view('buku', [
-                'books' => $books,
-                'categories' => $categories,
-                'peminjamans' => $peminjamans,
-                'bestSellers' => $bestSellers
-            ]);
-        }
         
 
         // Menampilkan halaman dashboard admin
