@@ -6,20 +6,29 @@ $white-color: #ffffff;
 
 // Navbar
 .navbar {
-  background-color: #e0c9a6 !important;
+  background-color: $primary-color !important;
 
   .navbar-brand,
   .nav-link {
-    color: $text-color !important;
+    color: $white-color !important;
     font-weight: bold;
 
-    &:hover {
-      color: darken($text-color, 20%) !important;
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      color: lighten($white-color, 10%) !important;
+      text-decoration: underline !important;
     }
   }
 
   .btn-link {
     padding: 0;
+    color: $white-color !important;
+
+    &:hover {
+      color: lighten($white-color, 10%) !important;
+    }
   }
 }
 
@@ -117,9 +126,9 @@ $white-color: #ffffff;
     color: $white-color;
   }
 
-  
-  th {
 
+  th {
+    
     font-weight: bold;
   }
 

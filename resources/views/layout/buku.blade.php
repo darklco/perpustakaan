@@ -9,34 +9,34 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
-    <div class="container-fluid">
-        <a class="navbar-brand fw-bold text-dark" href="#">Librio</a>
+        <nav class="navbar navbar-expand-lg px-4">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold" href="#">Librio</a>
 
-        <!-- Tombol Hamburgernya -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
 
-        <!-- Navbarnya -->
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-            <ul class="navbar-nav align-items-center">
-                <li><a href="{{ route('peminjaman.tabel') }}" class="text-blue-600 hover:underline">Tabel Peminjaman</a></li>
-            </ul>
-
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item">
+                    <a href="{{ route('peminjaman.tabel') }}" class="nav-link">Tabel Peminjaman</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
 
-<!-- Konten -->
-<div class="container mt-4">
+
+                <!-- Konten -->
+                <div class="container mt-4">
     
-    <!-- Tombol Kembali -->
-    <div class="mb-3">
-        <a href="javascript:history.back()" class="btn btn-secondary">&larr; Kembali</a>
-    </div>
+                 <!-- Tombol Kembali -->
+                <div class="mb-3">
+                 <a href="javascript:history.back()" class="btn btn-secondary">&larr; Kembali</a>
+                 </div>
 
     @yield('content')
 
