@@ -137,7 +137,7 @@
                 <thead>
                     <tr>
                         <th>Judul Buku</th>
-                        <th>Nama Peminjam</th>
+                        {{-- <th>Nama Peminjam</th> --}}
                         <th>Tanggal Pinjam</th>
                         <th>Tanggal Kembali</th>
                         <th>Status</th>
@@ -147,7 +147,7 @@
                     @foreach($peminjamans as $peminjaman)
                     <tr>
                         <td>{{ $peminjaman->book->judul ?? 'Buku tidak ditemukan' }}</td>
-                        <td>{{ $peminjaman->nama_peminjam ?? '-' }}</td>
+                        {{-- <td>{{ $peminjaman->nama_peminjam ?? '-' }}</td> --}}
                 
                         {{-- Tanggal Pinjam --}}
                         <td>

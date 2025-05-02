@@ -40,7 +40,7 @@
                             <td>{{ $book->category->nama ?? '-' }}</td>
                         </tr>
                     </table>
-                    <a href="{{ route('books.index') }}" class="btn btn-secondary mt-3">Kembali</a>
+                    {{-- <a href="{{ route('books.index') }}" class="btn btn-secondary mt-3">Kembali</a> --}}
                 </div>
             </div>
         </div>

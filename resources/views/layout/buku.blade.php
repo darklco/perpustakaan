@@ -35,8 +35,7 @@
     
                  <!-- Tombol Kembali -->
                 <div class="mb-3">
-                    <a href="{{ route('index') }}" class="btn btn-secondary">&larr; Kembali</a>
-
+                 <a href="javascript:history.back()" class="btn btn-secondary">&larr; Kembali</a>
                  </div>
 
     @yield('content')
