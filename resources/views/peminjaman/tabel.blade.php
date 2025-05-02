@@ -70,8 +70,9 @@
     <h1 class="text-center mb-4">Daftar Buku yang Dipinjam</h1>
     
     <div class="mb-3">
-        <a href="{{ route('buku') }}" class="btn btn-secondary">← Kembali ke Daftar Buku</a>
-    </div>
+        <a href="javascript:history.back()" class="btn btn-secondary">&larr; Kembali</a>
+        </div>
+
 
     <table class="table table-striped">
         <thead class="table-dark">
