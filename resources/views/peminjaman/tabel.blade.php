@@ -31,47 +31,50 @@
         <a href="{{ route('buku') }}" class="btn btn-secondary">← Kembali ke Daftar Buku</a>
     </div>
 
-    <table class="table table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>No</th>
-                <th>Judul Buku</th>
-                <th>Tanggal Pinjam</th>
-                <th>Jatuh Tempo</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($peminjamans as $index => $peminjaman)
-                @if($peminjaman->status === 'dipinjam')
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $peminjaman->book->judul ?? '-' }}</td>
-                        <td>
-                            {{ $peminjaman->tanggal_pinjam ? \Carbon\Carbon::parse($peminjaman->tanggal_pinjam)->format('d M Y') : '-' }}
-                        </td>
-                        <td>
-                            {{ $peminjaman->jatuh_tempo ? \Carbon\Carbon::parse($peminjaman->jatuh_tempo)->format('d M Y') : '-' }}
-                            @if($peminjaman->jatuh_tempo && now()->toDateString() === \Carbon\Carbon::parse($peminjaman->jatuh_tempo)->toDateString())
-                                <span class="text-danger d-block">Hari ini batas akhir</span>
-                            @endif
-                        </td>
-                        <td>
-                            <form action="{{ route('peminjaman.kembalikan') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="id" value="{{ $peminjaman->id }}">
-                                <button type="submit" class="btn btn-warning">Kembalikan</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endif
-            @empty
+    <!-- Wrapper for responsive table -->
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="table-dark">
                 <tr>
-                    <td colspan="5" class="text-center">Tidak ada buku yang sedang dipinjam</td>
+                    <th>No</th>
+                    <th>Judul Buku</th>
+                    <th>Tanggal Pinjam</th>
+                    <th>Jatuh Tempo</th>
+                    <th>Aksi</th>
                 </tr>
-            @endforelse
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @forelse($peminjamans as $index => $peminjaman)
+                    @if($peminjaman->status === 'dipinjam')
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $peminjaman->book->judul ?? '-' }}</td>
+                            <td>
+                                {{ $peminjaman->tanggal_pinjam ? \Carbon\Carbon::parse($peminjaman->tanggal_pinjam)->format('d M Y') : '-' }}
+                            </td>
+                            <td>
+                                {{ $peminjaman->jatuh_tempo ? \Carbon\Carbon::parse($peminjaman->jatuh_tempo)->format('d M Y') : '-' }}
+                                @if($peminjaman->jatuh_tempo && now()->toDateString() === \Carbon\Carbon::parse($peminjaman->jatuh_tempo)->toDateString())
+                                    <span class="text-danger d-block">Hari ini batas akhir</span>
+                                @endif
+                            </td>
+                            <td>
+                                <form action="{{ route('peminjaman.kembalikan') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $peminjaman->id }}">
+                                    <button type="submit" class="btn btn-warning">Kembalikan</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endif
+                @empty
+                    <tr>
+                        <td colspan="5" class="text-center">Tidak ada buku yang sedang dipinjam</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>
