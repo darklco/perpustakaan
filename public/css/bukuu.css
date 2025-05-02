@@ -14,6 +14,24 @@
   padding: 0;
 }
 
+.navbar {
+  background-color: #3e2c23 !important;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  color: #0d6efd !important;
+}
+
+.navbar-nav a {
+  color: #0d6efd;
+  text-decoration: none;
+  margin-left: 15px;
+}
+
+
+
 .sidebar {
   background-color: #f5f0eb;
 }

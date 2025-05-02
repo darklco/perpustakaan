@@ -97,6 +97,7 @@ class PeminjamanController extends Controller
         return back()->with('success', "Buku berhasil dikembalikan. Denda: Rp " . number_format($denda));
     }
     
+    
     /**
      * Fungsi untuk menampilkan form peminjaman
      */
@@ -105,4 +106,22 @@ class PeminjamanController extends Controller
         $buku = Book::findOrFail($id);
         return view('peminjaman', compact('buku'));
     }
+
+    public function returnBook($id)
+{
+    $peminjaman = Peminjaman::findOrFail($id);
+    
+    // Cek apakah buku sudah dikembalikan
+    if ($peminjaman->status == 'dikembalikan') {
+        return redirect()->route('admin.riwayat')->with('error', 'Buku sudah dikembalikan.');
+    }
+
+    // Update status peminjaman dan tanggal kembali
+    $peminjaman->status = 'dikembalikan';
+    $peminjaman->tanggal_kembali = now(); // Atau format tanggal sesuai keinginan
+    $peminjaman->save();
+
+    return redirect()->route('admin.riwayat')->with('success', 'Buku berhasil dikembalikan.');
+}
+
 }

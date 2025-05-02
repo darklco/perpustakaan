@@ -7,6 +7,8 @@ use App\Models\Book;
 use App\Models\Category;
 use App\Models\Peminjaman;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth; // untuk ambil user id
 
 class BookController extends Controller
 {
@@ -205,13 +207,31 @@ class BookController extends Controller
         $book = Book::findOrFail($id);
         $peminjamans = Peminjaman::where('status', 'dipinjam')->get();
         
-        return view('peminjaman.form', compact('book', 'peminjamans'));
+        $tanggalPinjam = Carbon::now();
+        $tanggalJatuhTempo = $tanggalPinjam->copy()->addDays(4);
+    
+        return view('peminjaman.form', compact('book', 'peminjamans', 'tanggalPinjam', 'tanggalJatuhTempo'));
     }
 
     public function pinjam(Request $request)
-    {
-        return redirect()->route('dashboard.user')->with('success', 'Buku berhasil dipinjam');
-    }
+{
+    $request->validate([
+        'book_id' => 'required|exists:books,id',
+    ]);
+
+    $tanggalPinjam = Carbon::now();
+    $tanggalJatuhTempo = $tanggalPinjam->copy()->addDays(4);
+
+    Peminjaman::create([
+        'user_id' => Auth::id(),
+        'book_id' => $request->book_id,
+        'tanggal_pinjam' => $tanggalPinjam,
+        'jatuh_tempo' => $tanggalJatuhTempo,
+        'status' => 'dipinjam'
+    ]);
+
+    return redirect()->route('dashboard.user')->with('success', 'Buku berhasil dipinjam');
+}
 
     public function show($id)
     {

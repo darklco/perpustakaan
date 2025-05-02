@@ -25,14 +25,14 @@
         <div class="alert alert-success text-center">{{ session('success') }}</div>
     @endif
 
-    <h1 class="text-center">Daftar Buku yang Dipinjam</h1>
+    <h1 class="text-center mb-4">Daftar Buku yang Dipinjam</h1>
     
     <div class="mb-3">
         <a href="{{ route('buku') }}" class="btn btn-secondary">← Kembali ke Daftar Buku</a>
     </div>
 
     <table class="table table-striped">
-        <thead class="thead-dark">
+        <thead class="table-dark">
             <tr>
                 <th>No</th>
                 <th>Judul Buku</th>
@@ -43,25 +43,27 @@
         </thead>
         <tbody>
             @forelse($peminjamans as $index => $peminjaman)
-                @if($peminjaman->status == 'dipinjam')
-                <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $peminjaman->book->judul }}</td>
-                    <td>{{ $peminjaman->tanggal_pinjam->format('d M Y') }}</td>
-                    <td>
-                        {{ $peminjaman->jatuh_tempo_text }}
-                        @if(Carbon\Carbon::now()->gt($peminjaman->jatuh_tempo))
-                            <span class="text-danger">Hari ini batas akhir</span>
-                        @endif
-                    </td>
-                    <td>
-                        <form action="{{ route('peminjaman.kembalikan') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="id" value="{{ $peminjaman->id }}">
-                            <button type="submit" class="btn btn-warning">Kembalikan</button>
-                        </form>
-                    </td>
-                </tr>
+                @if($peminjaman->status === 'dipinjam')
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $peminjaman->book->judul ?? '-' }}</td>
+                        <td>
+                            {{ $peminjaman->tanggal_pinjam ? \Carbon\Carbon::parse($peminjaman->tanggal_pinjam)->format('d M Y') : '-' }}
+                        </td>
+                        <td>
+                            {{ $peminjaman->jatuh_tempo ? \Carbon\Carbon::parse($peminjaman->jatuh_tempo)->format('d M Y') : '-' }}
+                            @if($peminjaman->jatuh_tempo && now()->toDateString() === \Carbon\Carbon::parse($peminjaman->jatuh_tempo)->toDateString())
+                                <span class="text-danger d-block">Hari ini batas akhir</span>
+                            @endif
+                        </td>
+                        <td>
+                            <form action="{{ route('peminjaman.kembalikan') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $peminjaman->id }}">
+                                <button type="submit" class="btn btn-warning">Kembalikan</button>
+                            </form>
+                        </td>
+                    </tr>
                 @endif
             @empty
                 <tr>
@@ -71,3 +73,5 @@
         </tbody>
     </table>
 </div>
+</body>
+</html>

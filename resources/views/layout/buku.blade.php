@@ -22,21 +22,7 @@
         <!-- Navbarnya -->
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
             <ul class="navbar-nav align-items-center">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#tentang">Tentang Kami</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#footer">Kontak</a>
-                </li>
-                <li class="nav-item">
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-link nav-link text-dark p-0">Logout</button>
-                    </form>
-                </li>
+                <li><a href="{{ route('peminjaman.tabel') }}" class="text-blue-600 hover:underline">Tabel Peminjaman</a></li>
             </ul>
 
         </div>

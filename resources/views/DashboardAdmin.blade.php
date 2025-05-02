@@ -17,6 +17,8 @@
             <li><a href="#" onclick="showContent('hapus')"><i class="fas fa-book"></i> Kelola Buku</a></li>
             <li><a href="#" onclick="showContent('tambah')"><i class="fas fa-plus-circle"></i> Tambah Buku</a></li>
             <li><a href="#" onclick="showContent('riwayat')"><i class="fas fa-history"></i> Riwayat Peminjaman</a></li>
+            <li><a href="{{ route('admin.account') }}"><i class="fas fa-user"></i> Akun</a></li>
+
         </ul>
     </div>
 
@@ -146,17 +148,31 @@
                     <tr>
                         <td>{{ $peminjaman->book->judul ?? 'Buku tidak ditemukan' }}</td>
                         <td>{{ $peminjaman->nama_peminjam ?? '-' }}</td>
-                        <td>{{ $peminjaman->tanggal_pinjam ?? '-' }}</td>
-                        <td>{{ $peminjaman->tanggal_kembali ?? '-' }}</td>
-                        <td>{{ $peminjaman->status ?? '-' }}</td>
+                        
+                        {{-- Format Tanggal Pinjam --}}
+                        <td>
+                            {{ $peminjaman->tanggal_pinjam 
+                                ? \Carbon\Carbon::parse($peminjaman->tanggal_pinjam)->format('d M Y') 
+                                : '-' }}
+                        </td>
+        
+                        {{-- Format Tanggal Kembali --}}
+                        <td>
+                            {{ $peminjaman->tanggal_kembali 
+                                ? \Carbon\Carbon::parse($peminjaman->tanggal_kembali)->format('d M Y') 
+                                : '-' }}
+                        </td>
+        
+                        <td>{{ ucfirst($peminjaman->status) ?? '-' }}</td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
             @endif
         </div>
-    </div>
-</div>
+        
+     
+
 
 <script>
     function showContent(sectionId) {

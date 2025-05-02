@@ -20,12 +20,12 @@ class AuthController extends Controller
     // Proses registrasi
     public function register(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
         ]);
-
         User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -62,6 +62,7 @@ class AuthController extends Controller
                 return redirect()->route('index')->with('success', 'Login berhasil.');
             }
         }
+        
 
         return back()->withErrors([
             'email' => 'Email atau password salah.',
@@ -98,4 +99,10 @@ class AuthController extends Controller
 
         return view('dashboardadmin', compact('books', 'categories'));
     }
+
+    public function account()
+    {
+        return view('admin.account');
+    }
+
 }

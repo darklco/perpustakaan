@@ -9,7 +9,7 @@ class Peminjaman extends Model
 {
     use HasFactory;
 
-    protected $table = 'peminjamen';
+    protected $table = 'peminjamen'; // pastikan nama tabel ini benar
     
     protected $fillable = [
         'user_id',
@@ -19,8 +19,7 @@ class Peminjaman extends Model
         'tanggal_kembali',
         'status'
     ];
-    
-    // Mendeklarasikan kolom yang harus diparse sebagai tanggal
+
     protected $dates = [
         'tanggal_pinjam',
         'jatuh_tempo',
@@ -28,20 +27,25 @@ class Peminjaman extends Model
         'created_at',
         'updated_at'
     ];
-    
-    // Accessor untuk jatuh_tempo_text
+
+    protected $casts = [
+        'tanggal_pinjam' => 'datetime',
+        'jatuh_tempo' => 'datetime',
+    ];
+
     public function getJatuhTempoTextAttribute()
     {
-        return '4 hari setelah peminjaman';
+        if ($this->tanggal_pinjam) {
+            return $this->tanggal_pinjam->addDays(4)->format('d-m-Y');
+        }
+        return null;
     }
 
-    // Relasi dengan model Book
     public function book()
     {
         return $this->belongsTo(Book::class);
     }
 
-    // Relasi dengan model User
     public function user()
     {
         return $this->belongsTo(User::class);

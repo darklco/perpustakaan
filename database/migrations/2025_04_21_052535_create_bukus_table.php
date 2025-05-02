@@ -18,8 +18,12 @@ return new class extends Migration
             $table->string('penerbit');
             $table->year('tahun_terbit');
             $table->integer('stok');
-            $table->string('foto')->nullable(); // tambahkan ini
+            $table->unsignedBigInteger('category_id'); // Tambahkan ini
+            $table->string('foto')->nullable();
             $table->timestamps();
+
+            // Foreign key constraint
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('books'); 
+        Schema::dropIfExists('books');
     }
 };

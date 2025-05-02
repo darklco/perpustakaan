@@ -66,4 +66,5 @@ Route::middleware(['auth'])->group(function () {
     // search user
     Route::get('/search', [BookController::class, 'searchuser'])->name('search.user');
     
+    Route::get('/admin/account', [AuthController::class, 'account'])->name('admin.account');
 

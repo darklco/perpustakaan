@@ -32,9 +32,9 @@
     </div>
 
     <div id="book-list" class="container-fluid">
-    <div class="book-grid row gx-4 gy-4" id="book-container"> <!-- Perubahan di sini: menambahkan gx-4 dan gy-4 untuk gap antar card -->
+    <div class="book-grid row gx-4 gy-4" id="book-container">
         @foreach ($books as $book)
-            <div class="book-card px-2 col-md-3 mb-4"> <!-- Perubahan di sini: menyesuaikan col-md-3 agar muat 6 card per baris -->
+            <div class="book-card px-2 col-md-3 mb-4">
                 <div class="card h-100 shadow-sm border-0">
                     @if ($book->foto)
                         <img src="{{ asset('storage/' . $book->foto) }}" class="card-img-top" alt="{{ $book->judul }}">
