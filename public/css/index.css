@@ -437,3 +437,46 @@ footer.footer .footer-content .footer-icons i {
 .carousel-btn:hover {
   background-color: #8c5d42;
 }/*# sourceMappingURL=index.css.map */
+
+/* Tombol Info */
+.card .btn-info {
+  display: inline-block;
+  background-color: #8c5d42;
+  color: #fff;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+  margin-right: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.card .btn-info:hover {
+  background-color: #0056b3;
+}
+
+/* Tombol Pinjam */
+.card .btn-pinjam {
+  display: inline-block;
+  background-color: #8c5d42;
+  color: #fff;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.card .btn-pinjam:hover {
+  background-color: #1e7e34;
+}
+
+/* Styling tambahan untuk container tombol agar sejajar */
+.card .card-buttons {
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
