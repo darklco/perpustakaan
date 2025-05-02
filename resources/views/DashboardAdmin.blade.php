@@ -148,25 +148,35 @@
                     <tr>
                         <td>{{ $peminjaman->book->judul ?? 'Buku tidak ditemukan' }}</td>
                         <td>{{ $peminjaman->nama_peminjam ?? '-' }}</td>
-                        
-                        {{-- Format Tanggal Pinjam --}}
+                
+                        {{-- Tanggal Pinjam --}}
                         <td>
                             {{ $peminjaman->tanggal_pinjam 
                                 ? \Carbon\Carbon::parse($peminjaman->tanggal_pinjam)->format('d M Y') 
                                 : '-' }}
                         </td>
-        
-                        {{-- Format Tanggal Kembali --}}
+                
+                        {{-- Tanggal Kembali --}}
                         <td>
                             {{ $peminjaman->tanggal_kembali 
                                 ? \Carbon\Carbon::parse($peminjaman->tanggal_kembali)->format('d M Y') 
                                 : '-' }}
                         </td>
-        
-                        <td>{{ ucfirst($peminjaman->status) ?? '-' }}</td>
+                
+                        {{-- Status --}}
+                        <td>
+                            @if ($peminjaman->status === 'dikembalikan')
+                                <span class="badge bg-success">Dikembalikan</span>
+                            @elseif ($peminjaman->status === 'dipinjam')
+                                <span class="badge bg-warning text-dark">Sedang dipinjam</span>
+                            @else
+                                <span class="badge bg-secondary">Tidak diketahui</span>
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
+                
             </table>
             @endif
         </div>
